@@ -1,24 +1,35 @@
 import logo from './logo.svg';
 import './App.css';
+import { Routes, Route, useNavigate,Navigate } from "react-router-dom";
+import Location from './components/Location';
+import NavBar from './components/NavBar';
+import Login from './components/Login'
+import React, { useState, useEffect }  from 'react';
+
 
 function App() {
+  const [auth, setAuth]=useState(0);
+  const navigate = useNavigate();
+  useEffect(()=>{
+      let user = localStorage.getItem("user");
+      if(user!=null){
+          setAuth(true);
+      }
+  })
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <NavBar/>
+      <Routes>
+        {auth==0 &&
+          <Route path="/login" element={<Login />}/>
+        }
+        {auth!=0 &&
+          <Route path="/location" element={<Location />} />
+        }
+        <Route path="*" element={<Navigate to={auth==0 ?  "/login": "/location" } />} />
+      </Routes>
+    </>
+    
   );
 }
 
