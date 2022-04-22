@@ -12,6 +12,17 @@
  */
 
 
+.weather-display {
+  font-size: calc(1.525rem + 3.3vw);
+  font-weight: 300;
+  line-height: 1;
+}
+@media (min-width: 1200px) {
+  .weather-display {
+    font-size: 4rem;
+  }
+}
+
 .text-right {
   text-align: right;
 }
@@ -161,7 +172,8 @@ h6, .h6 {
 
 p {
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
+  line-height: 0;
 }
 
 abbr[title],
