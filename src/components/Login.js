@@ -6,19 +6,35 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import KeyIcon from '@mui/icons-material/Key';
 
 function Login(){
-    const [username, setUsername]=useState("");
-    const [password, setPassword]=useState("");
+    const [username, setUsername]=useState(null);
+    const [password, setPassword]=useState(null);
+    const [unHelperText,setUnHelperText]=useState(null);
+    const [pwHelperText,setPwHelperText]=useState(null);
     const handleUsernameChange=(event)=>{
         setUsername(event.target.value)
+        setUnHelperText(null)
     }
     const handlePasswordChange=(event)=>{
         setPassword(event.target.value)
+        setPwHelperText(null)
     }
     const navigate = useNavigate();
     const handleClick=(event)=>{
         //if verified
-        localStorage.setItem("user",username);
-        window.location.assign("/location");
+        if(username!=null&&password!=null){
+            localStorage.setItem("user",username);
+            window.location.assign("/location");
+        }else{
+
+            if(username==null){
+                setUnHelperText("Username cannot be empty!")
+            }
+            if(password==null){
+                setPwHelperText("Password cannot be empty!")
+            }
+
+        }
+        
     }
     return(
         <>
@@ -30,28 +46,51 @@ function Login(){
                 backgroundSize: "cover",
                 position: "fixed",
             }}>
-                <Container maxWidth="sm" sx={{my:"15%", backgroundColor:"white",textAlign:"center"}} className="border border-light border-4">
-                    <Box sx={{margin:5}} >
+                <Container maxWidth="sm" 
+                    sx={{
+                        backgroundColor:"white",textAlign:"center"
+                    }} 
+                        className="border border-light border-4 balance"
+                >
+                    <Box sx={{
+                        margin:{
+                            xs:"2em 0em 2em 0em",
+                            md:"5em 5em 5em 5em"
+                        }
+                    }} >
                         <h2 className="text-center ">Login</h2>
                         <hr className="divider divider-dark text-center" />
-                        <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent:"center", mb:2, mx:6}}>
+                        <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent:"center", mb:2, 
+                            mx:{
+                                xs:1,
+                                md:6
+                            }}
+                        }>
                             <AccountCircleIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
                             <TextField 
                                 label="Username" 
                                 variant="standard" 
                                 value={username}
                                 onChange={handleUsernameChange}
+                                helperText={unHelperText}
+                                error={unHelperText!=null}
                                 fullWidth
                             />
                         </Box>
-                        <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent:"center", mb:5, mx:6}}>
+                        <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent:"center", mb:5, mx:{
+                                xs:1,
+                                md:6
+                            }
+                        }}>
                             <KeyIcon sx={{ color: "action.active", mr: 1, my: 0.5}} />
                             <TextField  
                                 label="Password" 
                                 variant="standard" 
                                 value={password}
                                 onChange={handlePasswordChange}
+                                helperText={pwHelperText}
                                 type="password"
+                                error={pwHelperText!=null}
                                 fullWidth
                             />
                         </Box>

@@ -38,8 +38,8 @@ var textFade = function(){
     weatherInfo2[3].style.opacity=1-(window.scrollY*3/window.innerHeight);
     
     map0.style.opacity=-0.1+(window.scrollY/window.innerHeight);
-    map1.style.opacity=-0.3+(window.scrollY/window.innerHeight);
-    map2.style.opacity=-0.35+(window.scrollY/window.innerHeight);
+    map1.style.opacity=-0.2+(window.scrollY/window.innerHeight);
+    map2.style.opacity=-0.4+(window.scrollY/window.innerHeight);
 
 
 }
@@ -64,7 +64,7 @@ function Map(props){
     });
     return (
         <div>
-            <div ref={mapContainer} className="map-container" style={{height: "600px"}} />
+            <div ref={mapContainer} className="map-container" />
         </div>
     );
 }
@@ -108,7 +108,18 @@ function Location(){
     }
     return(
         <>
-            <Fab color="secondary" sx={{left:40, bottom:40, position:"fixed"}} onClick={handleFavorite}>
+            <Fab color="secondary" 
+                sx={{
+                    left:{
+                        xs:20,
+                        md:40
+                    }, 
+                    bottom:{
+                        xs:20,
+                        md:40
+                    }, 
+                    position:"fixed"
+                }} onClick={handleFavorite}>
                 <FavoriteIcon sx={{ color: heartColor }} />
             </Fab>
             <div style={{
@@ -119,39 +130,53 @@ function Location(){
                 backgroundSize: "cover",
                 backgroundAttachment: "fixed"
             }}> 
-                <Grid container spacing={2}>
+                <Grid container spacing={2} columns={{xs:6, md:12}}>
                     <Grid item xs={6}>
-                        <Box sx={{pl:"15vh", pt:"55vh", pb:"60vh"}} >
+                        <Box sx={{
+                            pl:{
+                                xs:"5vh",
+                                md:"15vh"
+                            },
+                            pt:{
+                                xs:"14vh",
+                                md:"60vh"
+                            }, 
+                            pb:{
+                                xs:"0vh",
+                                md:"60vh"
+                            },
+                         
+                        }}>
                             <p className="weather-display text-left text-white">
-                                <FontAwesomeIcon icon={faWind} style={{fontSize:40, paddingRight:"1em"}} fullWidth/>
+                                <FontAwesomeIcon icon={faWind} style={{ paddingRight:"1em"}} fullWidth/>
                                 
-                                {info.wind_dir=="N"?<NorthIcon sx={{color:"#fff",fontSize: 40}}/>:
-                                info.wind_dir=="NE"?<NorthEastIcon sx={{color:"#fff",fontSize: 40}}/>:
-                                info.wind_dir=="E"?<EastIcon sx={{color:"#fff",fontSize: 40}}/>:
-                                info.wind_dir=="SE"?<SouthEastIcon sx={{color:"#fff",fontSize: 40}}/>:
-                                info.wind_dir=="S"?<SouthIcon sx={{color:"#fff",fontSize: 40}}/>:
-                                info.wind_dir=="SW"?<SouthWestIcon sx={{color:"#fff",fontSize: 40}}/>:
-                                info.wind_dir=="W"?<WestIcon sx={{color:"#fff",fontSize: 40}}/>:
-                                <NorthWestIcon sx={{color:"#fff",fontSize: 40}}/>}
-                                <span style={{fontSize:40}}> 
+                                {info.wind_dir=="N"?<NorthIcon sx={{color:"#fff"}} />:
+                                info.wind_dir=="NE"?<NorthEastIcon sx={{color:"#fff"}}/>:
+                                info.wind_dir=="E"?<EastIcon sx={{color:"#fff"}}/>:
+                                info.wind_dir=="SE"?<SouthEastIcon sx={{color:"#fff"}}/>:
+                                info.wind_dir=="S"?<SouthIcon sx={{color:"#fff"}}/>:
+                                info.wind_dir=="SW"?<SouthWestIcon sx={{color:"#fff"}}/>:
+                                info.wind_dir=="W"?<WestIcon sx={{color:"#fff"}}/>:
+                                <NorthWestIcon sx={{color:"#fff"}}/>}
+                                <span> 
                                     {info.wind_kph}kph
                                 </span>
                             </p>   
                             <p className="weather-display text-left text-white" >
-                                <FontAwesomeIcon icon={faDroplet} style={{fontSize:40,paddingRight:"1em"}} fullWidth/>
-                                <span style={{fontSize:40}} > 
+                                <FontAwesomeIcon icon={faDroplet} style={{paddingRight:"1em"}} fullWidth/>
+                                <span > 
                                 {info.humidity}%
                                 </span>
                             </p>           
                             <p className="weather-display text-left text-white">
-                                <FontAwesomeIcon icon={faCloudRain} style={{fontSize:40, paddingRight:"1em"}} fullWidth/>
-                                <span style={{fontSize:40}}> 
+                                <FontAwesomeIcon icon={faCloudRain} style={{ paddingRight:"1em"}} fullWidth/>
+                                <span > 
                                 {info.precip_mm}mm
                                 </span>
                             </p>    
                             <p className="weather-display text-left text-white">
-                                <FontAwesomeIcon icon={faEye} style={{fontSize:40, paddingRight:"1em"}} fullWidth/>
-                                <span style={{fontSize:40}}> 
+                                <FontAwesomeIcon icon={faEye} style={{ paddingRight:"1em"}} fullWidth/>
+                                <span > 
                                     {info.vis_km}km
                                 </span>
                             </p>   
@@ -159,7 +184,19 @@ function Location(){
                         
                     </Grid>
                     <Grid item xs={6}>
-                        <Box sx={{pr:"15vh", pt:"55vh", pb:"60vh"}} id="weather-info" >
+                        <Box sx={{
+                            pr:{
+                                xs:"5vh",
+                                md:"15vh"
+                            }, 
+                            pt:{
+                                xs:"20vh",
+                                md:"60vh"
+                            }, 
+                            pb:{
+                                xs:"60vh"
+                            }
+                        }} id="weather-info" >
                             <h1 class="display-1 text-right text-white" >
                                 {info.name}
                             </h1>
@@ -171,20 +208,29 @@ function Location(){
                 
                 </Grid>
                 
-                <Box sx={{pl:"20vh", pb:"2vh"}}>
+                <Box sx={{
+                    pl:{
+                        xs:0,
+                        md:"20vh",
+                    }, 
+                    pb:{
+                        xs:"1vh",
+                        md:"1vh"
+                    }
+                }}>
       
 
                     <h1>
-                        <span class="display-1 text-left text-white" id="map0" sx={{display:"inline"}}>
+                        <span class="display-2 text-left text-white" id="map0" sx={{display:"inline"}}>
                             You&nbsp;   
                         </span>
-                        <span class="display-1 text-left text-white" id="map1" sx={{display:"inline", opacity:0}}>
+                        <span class="display-2 text-left text-white" id="map1" sx={{display:"inline", opacity:0}}>
                             are here...    
                         </span>
                     
                     </h1>              
                 </Box>
-                <Box sx={{pb:"20vh"}}>
+                <Box sx={{pb:"40vh"}}>
                     <Container maxWidth="lg" id="map2">
                         
                         <Map lng={info.longitude} lat={info.latitude}/>
@@ -192,29 +238,47 @@ function Location(){
                     </Container>
 
                 </Box>
-                <Box>
-                    <Container maxWidth="md" sx={{height:700}} >
+                <Box sx={{pb:"5vh"}}>
+                    <Container maxWidth="md" 
+                        sx={{
+                            height:{
+                                xs:500,
+                                md:700
+                            },
+                        }} 
+                    >
 
-                                <Paper elevation={24} sx={{height:500, px:2}} >
-                                    <Typography variant='h4' sx={{pt:2}}>
-                                        <MessageIcon  fontSize="large"/>Comment
-                                    </Typography>
-                                    <List sx={{height:340, backgroundColor: "#e3f2fd", my:2}}>
-                                        {info.commentList.map((data,i)=>(
-                                            <ListItem key={i}>
-                                                <ListItemText>
-                                                    {info.commentList[i].username}: {info.commentList[i].content}
-                                                </ListItemText>
-                                            </ListItem>
-                                        ))}
-                                    </List>
-                                    <TextField
-                                        label="Your Comment"
-                                        value={comment}
-                                        onChange={handleInputComment}
-                                        fullWidth
-                                    />                                
-                                </Paper>
+                        <Paper elevation={24} sx={{
+                            height:{
+                                xs:400,
+                                md:500
+                            }, 
+                            px:2
+                        }} >
+                            <Typography variant='h4' sx={{pt:2}}>
+                                <MessageIcon  fontSize="large"/>Comment
+                            </Typography>
+                            <List sx={{
+                                height:{
+                                    xs:240,
+                                    md:340
+                                }
+                                , backgroundColor: "#e3f2fd", my:2}}>
+                                {info.commentList.map((data,i)=>(
+                                    <ListItem key={i}>
+                                        <ListItemText>
+                                            {info.commentList[i].username}: {info.commentList[i].content}
+                                        </ListItemText>
+                                    </ListItem>
+                                ))}
+                            </List>
+                            <TextField
+                                label="Your Comment"
+                                value={comment}
+                                onChange={handleInputComment}
+                                fullWidth
+                            />                                
+                        </Paper>
             
 
                     </Container>
