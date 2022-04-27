@@ -2,12 +2,12 @@
 
  // User schema model
 const UserSchema = mongoose.Schema({
-    name: { type: String, required: true },
-    email: { type: String, unique: true, required: true },
-    password: { type: String, required: true },
-    permission: { type: String, required: true }, // "none" or "user" or "admin"
-    win_record: { type: Number, required: true },
-    verifycode: { type: Number, required: true },
+    username: { type: String, require: true, unique: ture },
+    password: { type: String, require: true },
+    permission: { type: Boolean, require: true },
+    favorite: [{
+        location: { type: String}
+    }]
 });
 
 // Location schema model
