@@ -56,9 +56,15 @@ app.post('/location', async(req, res) => {
                 humidity: res_humidity,
                 precip_mm: res_precip_mm,
                 vis_km: res_vis_km,
+            }, (err, result) => {
+                if(err){
+                    res.status(401);
+                    res.send(err);
+                }else{
+                    res.status(201);
+                    res.send('Succesfully created location');
+                }
             });
-            res.status(201);
-            res.send('Succesfully created location');
         }
     }
 });
