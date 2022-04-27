@@ -5,9 +5,7 @@ const UserSchema = mongoose.Schema({
     username: { type: String, require: true, unique: ture },
     password: { type: String, require: true },
     permission: { type: Boolean, require: true },
-    favorite: [{
-        location: { type: String}
-    }]
+    favourite: [{ type: String }]
 });
 
 // Location schema model
@@ -15,8 +13,8 @@ const LocationSchema = mongoose.Schema({
     locationID: { type: Number, unique: true, required: true },
     name: { type: String,  required: true },
     country: { type: String,  required: true },
-    latitube: { type: Number,  required: true },
-    longitube: { type: Number,  required: true },
+    lat: { type: Number,  required: true },
+    long: { type: Number,  required: true },
     time: { type: Date,  required: true },
     commentList: { type: [CommentSchema],  required: true },
     temp_c: { type: Number,  required: true },
@@ -25,6 +23,9 @@ const LocationSchema = mongoose.Schema({
     humidity: { type: Number,  required: true },
     precip_mm: { type: Number,  required: true },
     vis_km: { type: Number,  required: true },
+},
+{
+    timestamps: true
 });
 
 // Comment schema model
