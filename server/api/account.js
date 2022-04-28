@@ -1,8 +1,13 @@
-const express = require('express'); 
+const express = require('express');
+const cors = require("cors"); 
+let router = express.Router();
+router.use(cors());
+
+const { User } = require("../model.js");
 
 // handle request here
 // create a user
-app.post('/account', (req, res) => {
+router.post('/account', (req, res) => {
     User.create({
         username: req.body['username'],
         password: req.body['password'],
@@ -21,7 +26,7 @@ app.post('/account', (req, res) => {
 
 
 // get all user information
-app.get('/accounts', (req, res) => {
+router.get('/accounts', (req, res) => {
     if(req.cookies.permission != true){
         res.status(403);
         res.send('Permission denied');
@@ -40,7 +45,7 @@ app.get('/accounts', (req, res) => {
 
 
 // get information of a user
-app.get('/account', (req, res) => {
+router.get('/account', (req, res) => {
     User.findOne({
         username: req.query['username']
     }, (err, result) => {
@@ -61,7 +66,7 @@ app.get('/account', (req, res) => {
 
 
 // update account
-app.put('/account', (req, res) => {
+router.put('/account', (req, res) => {
     User.findOneAndUpdate({
         username: req.body['original_username']
     }, {
@@ -80,7 +85,7 @@ app.put('/account', (req, res) => {
 
 
 // delete account
-app.delete('/account', (req, res) => {
+router.delete('/account', (req, res) => {
     User.findOneAndDelete({
         username: req.body['username']
     }, (err, result) => {
@@ -93,3 +98,5 @@ app.delete('/account', (req, res) => {
         }
     });
 });
+
+module.exports = router;

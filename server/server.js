@@ -7,34 +7,27 @@ const port = 3000;
 const cookieTimeOut = 1200000;
 
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 
-const bodyParser = require('body-parser');
+let account = require("./api/account.js");
+let comment = require("./api/comment.js");
+let location = require("./api/location.js");
+let login = require("./api/login.js");
+let user = require("./api/user.js");
+
 app.use(bodyParser.urlencoded({extended:false}));
+app.use(account);
+app.use(comment);
+app.use(location);
+app.use(login);
+app.use(user);
 
 const mongoose = require('mongoose');
 const { triggerAsyncId } = require('async_hooks');
 mongoose.connect('mongodb+srv://stu150:p351885-@csci2720.m2qbq.mongodb.net/stu150');
 const db = mongoose.connection;
 
-
-// create schema
-const UserSchema = mongoose.Schema({
-    username: {type: String, require: true, unique: ture},
-    password: {type: String, require: true},
-    permission: {type: Boolean, require: true},
-    favorite: [{
-        location: {type: String}
-    }]
-});
-const User = mongoose.model('User', UserSchema);
-
-const CommentSchema = mongoose.Schema({
-    commentID: {type: Number, require: true, unique: ture},
-    username: {type: String},
-    content: {type: String}
-});
-const Comment = mongoose.model('Comment', CommentSchema);
 
 
 // Upon connection failure

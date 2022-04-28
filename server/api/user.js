@@ -1,9 +1,11 @@
 const express = require('express');
-const app = express();
+const cors = require("cors"); 
+let router = express.Router();
+router.use(cors());
 
-let User = require("../model.js");
+const { User } = require("../model.js");
 
-app.post('/addFavourite', (req, res) => {
+router.post('/addFavourite', (req, res) => {
     if(req.cookies.username == undefined){
         res.send('Please login before adding favorite location!');
     }else{
@@ -23,7 +25,7 @@ app.post('/addFavourite', (req, res) => {
     }
 });
 
-app.get('/getFavourite', (req, res) => {
+router.get('/getFavourite', (req, res) => {
     if(req.cookies.username == undefined){
         res.send('Please login first!');
     }else{
@@ -39,3 +41,5 @@ app.get('/getFavourite', (req, res) => {
         });
     }
 });
+
+module.exports = router;

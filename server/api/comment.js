@@ -1,10 +1,11 @@
 const express = require('express');
-const app = express();
+const cors = require("cors"); 
+let router = express.Router();
+router.use(cors());
 
-let Comment = require("../model.js");
-let Location = require("../model.js")
+const { Comment, Location } = require("../model.js");
 
-app.post('/addComment', (req, res) => {
+router.post('/addComment', (req, res) => {
     if(req.cookies.username == undefined){
         res.send('Please login before adding favorite location!');
     }else{
@@ -32,4 +33,6 @@ app.post('/addComment', (req, res) => {
             }
         });
     }
-})
+});
+
+module.exports = router;

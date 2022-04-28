@@ -1,14 +1,16 @@
 const express = require('express');
-const app = express();
+const cors = require("cors"); 
+let router = express.Router();
+router.use(cors());
 const fetch = require('node-fetch')
 
 
-let Location = require("../model.js");
+const { Location } = require("../model.js");
 
 const weatherAPI_key = '1d4b5bca7db7453cb6d121603222704';
 const weatherAPI_url = 'https://api.weatherapi.com/v1/current.json?key=' + weatherAPI_key;
 
-app.post('/location', async(req, res) => {
+router.post('/location', async(req, res) => {
     let locationName = req.body['name'];
     let req_lat = req.body['lat'];
     let req_long = req.body['long'];
@@ -69,7 +71,7 @@ app.post('/location', async(req, res) => {
     }
 });
 
-app.get('/locations', async(req,res) => {
+router.get('/locations', async(req,res) => {
     if(req.cookies.permission != true){
         res.status(403);
         res.send('Permission denied');
@@ -101,7 +103,7 @@ app.get('/locations', async(req,res) => {
     }
 });
 
-app.get('/location', async(req,res) => {
+router.get('/location', async(req,res) => {
     if(req.cookies.permission != true){
         res.status(403);
         res.send('Permission denied');
@@ -130,3 +132,5 @@ app.get('/location', async(req,res) => {
         })
     }
 });
+
+module.exports = router;

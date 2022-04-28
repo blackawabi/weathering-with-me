@@ -1,8 +1,12 @@
+const express = require('express');
+const cors = require("cors"); 
+let router = express.Router();
+router.use(cors());
 
-
+const { User } = require("../model.js");
 
 // login to the system
-app.post('/login', (req, res) => {
+router.post('/login', (req, res) => {
     User.findOne({
         username: req.body['username'],
         password: req.body['password'],
@@ -25,10 +29,12 @@ app.post('/login', (req, res) => {
 
 
 // logout
-app.get('/logout', (req, res) => {
+router.get('/logout', (req, res) => {
     res.cookie('username', '', { maxAge: -1});
     res.cookie('password', '', { maxAge: -1});
     res.cookie('permission', '', { maxAge: -1});
     res.status(200);
     res.send('Logout successfully');
 });
+
+module.exports = router;
