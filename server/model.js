@@ -39,6 +39,6 @@ const User = mongoose.model('User', UserSchema);
 const Location = mongoose.model('Location', LocationSchema);
 const Comment = mongoose.model('Comment', CommentSchema);
 
-module.exports = User;
-module.exports = Location;
-module.exports = Comment;
+exports.User = User;
+exports.Location = Location;
+exports.Comment = Comment;
