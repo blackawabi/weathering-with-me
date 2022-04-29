@@ -78,15 +78,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function Profile({users}) {
-  return(
-    <div>
-      <StickyHeadTable user={users}/>
-    </div>
-  );
-}
+// function Profile({users}) {
+//   return(
+//     <div>
+//       <StickyHeadTable user={users}/>
+//     </div>
+//   );
+// }
 
-function StickyHeadTable(props) {
+export default function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -192,4 +192,4 @@ function StickyHeadTable(props) {
   );
 }
 
-export default Profile; 
+// export default Profile; 
