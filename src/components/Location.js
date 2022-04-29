@@ -158,25 +158,25 @@ function Location(){
                                 info.wind_dir=="SW"?<SouthWestIcon sx={{color:"#fff"}}/>:
                                 info.wind_dir=="W"?<WestIcon sx={{color:"#fff"}}/>:
                                 <NorthWestIcon sx={{color:"#fff"}}/>}
-                                <span> 
+                                <span style={{userSelect: "none"}}> 
                                     {info.wind_kph}kph
                                 </span>
                             </p>   
                             <p className="weather-display text-left text-white" >
                                 <FontAwesomeIcon icon={faDroplet} style={{paddingRight:"1em"}} fullWidth/>
-                                <span > 
+                                <span style={{userSelect: "none"}}> 
                                 {info.humidity}%
                                 </span>
                             </p>           
                             <p className="weather-display text-left text-white">
                                 <FontAwesomeIcon icon={faCloudRain} style={{ paddingRight:"1em"}} fullWidth/>
-                                <span > 
+                                <span style={{userSelect: "none"}}> 
                                 {info.precip_mm}mm
                                 </span>
                             </p>    
                             <p className="weather-display text-left text-white">
                                 <FontAwesomeIcon icon={faEye} style={{ paddingRight:"1em"}} fullWidth/>
-                                <span > 
+                                <span style={{userSelect: "none"}}> 
                                     {info.vis_km}km
                                 </span>
                             </p>   
@@ -197,10 +197,10 @@ function Location(){
                                 xs:"60vh"
                             }
                         }} id="weather-info" >
-                            <h1 class="display-1 text-right text-white" >
+                            <h1 class="display-1 text-right text-white" style={{userSelect: "none"}}>
                                 {info.name}
                             </h1>
-                            <h6 class="display-1 text-right text-white">
+                            <h6 class="display-1 text-right text-white"style={{userSelect: "none"}}>
                                 {info.temp_c}°C
                             </h6>
                         </Box>
@@ -221,10 +221,10 @@ function Location(){
       
 
                     <h1>
-                        <span class="display-2 text-left text-white" id="map0" sx={{display:"inline"}}>
+                        <span class="display-2 text-left text-white" id="map0" sx={{display:"inline"}} style={{userSelect: "none"}}>
                             You&nbsp;   
                         </span>
-                        <span class="display-2 text-left text-white" id="map1" sx={{display:"inline", opacity:0}}>
+                        <span class="display-2 text-left text-white" id="map1" sx={{display:"inline", opacity:0}} style={{userSelect: "none"}}>
                             are here...    
                         </span>
                     

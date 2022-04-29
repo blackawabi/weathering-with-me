@@ -21,7 +21,7 @@ function Login(){
     const navigate = useNavigate();
     const handleClick=(event)=>{
         //if verified
-        if(username!=null&&password!=null){
+        /*if(username!=null&&password!=null){
             localStorage.setItem("user",username);
             window.location.assign("/location");
         }else{
@@ -33,9 +33,29 @@ function Login(){
                 setPwHelperText("Password cannot be empty!")
             }
 
-        }
+        }*/
+
+        fetch('http://223.16.119.208:4000/login', {
+            method: 'POST', 
+            body: new URLSearchParams({
+                "username":username,
+                "password":password
+            }),   
+        })
+        .then(res=>res.text())
+        .then(text=>console.log(text))
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+        localStorage.setItem("user","abc")
+
+
+
+
+
         
     }
+
     return(
         <>
             <div style={{

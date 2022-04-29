@@ -3,7 +3,7 @@
 // type "npm install cookie-parser"
 // type "npm install mongoose"
 
-const port = 3000;
+const port = 4000;
 // const cookieTimeOut = 1200000;
 
 const express = require('express');
