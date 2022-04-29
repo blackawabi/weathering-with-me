@@ -22,7 +22,7 @@ function NavBar(){
                     {localStorage.getItem("user")!=null &&     
                         <>
                             <li className="nav-item">
-                                <Link to="profile" className="nav-link">{localStorage.getItem("user")}
+                                <Link to="profile" className="nav-link">{localStorage.getItem("user")}{" "}
                                     Favourite Location
                                 </Link>
                             </li>               
