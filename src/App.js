@@ -4,6 +4,7 @@ import { Routes, Route, useNavigate,Navigate } from "react-router-dom";
 import Location from './components/Location';
 import NavBar from './components/NavBar';
 import Login from './components/Login'
+import StickyHeadTable from './components/Profile';
 import React, { useState, useEffect }  from 'react';
 
 
@@ -26,6 +27,7 @@ function App() {
         {auth!=0 &&
           <Route path="/location" element={<Location />} />
         }
+        <Route path="/profile" element={<StickyHeadTable />} />
         <Route path="*" element={<Navigate to={auth==0 ?  "/login": "/location" } />} />
       </Routes>
     </>
