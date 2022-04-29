@@ -14,13 +14,15 @@ import { Container,TextField, Box, Button } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import KeyIcon from '@mui/icons-material/Key';
 
+import users from "./userdata";
+
 const columns = [
   { id: 'name', label: 'Location', minWidth: 170 },
 ];
 
 function createData(name, code, population, size) {
-  const density = population / size;
-  return { name, code, population, size, density };
+  // const density = population / size;
+  return { name, code, population, size };
 }
 
 const rows = [
@@ -41,6 +43,18 @@ const rows = [
 //   createData('Brazil'),
 ];
 
+function createUserData(username, password, favourite, permission) {
+  // const density = population / size;
+  return { username, password, favourite, permission};
+};
+
+// function extractUserFavourite({users}) {
+//   return {users.favourite}
+// }; 
+
+
+
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -54,17 +68,25 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
   }));
   
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-      border: 0,
-    },
-  }));
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
 
-export default function StickyHeadTable() {
+function Profile({users}) {
+  return(
+    <div>
+      <StickyHeadTable user={users}/>
+    </div>
+  );
+}
+
+function StickyHeadTable(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -86,6 +108,7 @@ export default function StickyHeadTable() {
         backgroundSize: "cover",
         position: "fixed",
     }}>
+    
         <Container maxWidth='lg'
         // height = '100%'
         sx={{
@@ -104,55 +127,69 @@ export default function StickyHeadTable() {
                 <hr className="divider divider-dark text-center" />
                 
                 <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-                <TableContainer sx={{ maxHeight: 440 }}>
+                  <TableContainer sx={{ maxHeight: 440 }}>
                     <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <StyledTableRow>
-                        {columns.map((column) => (
-                            <StyledTableCell
-                            key={column.id}
-                            align={column.align}
-                            style={{ minWidth: column.minWidth }}
-                            >
-                            {column.label}
+                      <TableHead>
+                          <StyledTableRow>
+                          {columns.map((column) => (
+                              <StyledTableCell
+                                key={column.id}
+                                align={column.align}
+                                style={{ minWidth: column.minWidth }}
+                                >
+                                {column.label}
+                              </StyledTableCell>
+                          ))}
+                          </StyledTableRow>
+                      </TableHead>
+
+                      {/* <TableBody>
+                          {rows
+                          // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                          .map((row) => {
+                              return (
+                              <StyledTableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                  {columns.map((column) => {
+                                  const value = row[column.id];
+                                  return (
+                                      <StyledTableCell key={column.id} align={column.align}>
+                                      {column.format && typeof value === 'number'
+                                          ? column.format(value)
+                                          : value}
+                                      </StyledTableCell>
+                                  );
+                                  })}
+                              </StyledTableRow>
+                              );
+                          })}
+                      </TableBody> */}
+
+                      <TableBody>
+                        {users[0].favourite.map((row) => (
+                          <StyledTableRow key={row.name}>
+                            <StyledTableCell component="th" scope="row">
+                              {row}
                             </StyledTableCell>
+                          </StyledTableRow>
                         ))}
-                        </StyledTableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows
-                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        .map((row) => {
-                            return (
-                            <StyledTableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                                {columns.map((column) => {
-                                const value = row[column.id];
-                                return (
-                                    <StyledTableCell key={column.id} align={column.align}>
-                                    {column.format && typeof value === 'number'
-                                        ? column.format(value)
-                                        : value}
-                                    </StyledTableCell>
-                                );
-                                })}
-                            </StyledTableRow>
-                            );
-                        })}
-                    </TableBody>
+                      </TableBody>
+                      
                     </Table>
-                </TableContainer>
-                {/* <TablePagination
-                    rowsPerPageOptions={[10, 25, 100]}
-                    component="div"
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                /> */}
+                  </TableContainer>
+                  {/* <TablePagination
+                      rowsPerPageOptions={[10, 25, 100]}
+                      component="div"
+                      count={rows.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      onPageChange={handleChangePage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                  /> */}
                 </Paper>
             </Box>   
         </Container>        
     </div>
   );
 }
+
+export default Profile; 
