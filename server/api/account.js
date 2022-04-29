@@ -116,7 +116,7 @@ router.delete('/account', (req, res) => {
 
 
 // delete all users (warning)
-app.get('/account/init', (req, res) => {
+router.get('/account/init', (req, res) => {
     // reset index in DB (debug only) // User.syncIndexes();
 
     User.deleteMany({}, (err, results) => {
