@@ -1,6 +1,6 @@
 // type "npm install express"
 // type "npm install body-parser"
-// type "npm install cookie-parse"
+// type "npm install cookie-parser"
 // type "npm install mongoose"
 
 const port = 3000;
