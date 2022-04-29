@@ -16,7 +16,7 @@ router.post('/location', async(req, res) => {
     let req_long = req.body['long'];
     let res_country, res_temp_c, res_wind_kph, res_wind_dir, res_precip_mm, res_humidity, res_vis_km;
     let findLocation;
-    if(req.cookies.permission != true){
+    if(req.cookies.permission != 'true'){
         res.status(403);
         res.send('Permission denied');
     }else{
@@ -27,92 +27,133 @@ router.post('/location', async(req, res) => {
         .catch((err) => {
             res.send(err);
         })
+        let fetch_success = true;
+        let url = weatherAPI_url + '&q=' + req_lat + ',' + req_long + '&aqi=no';
+        try{
+            await fetch(url)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                res_country = res['location']['country'];
+                res_temp_c = res['current']['temp_c'];
+                res_wind_kph = res['current']['wind_kph'];
+                res_wind_dir = res['current']['wind_dir'];
+                res_precip_mm = res['current']['precip_mm'];
+                res_humidity = res['current']['humidity'];
+                res_vis_km = res['current']['vis_km'];
+            })
+        }
+        catch(e){
+            res.status(401);
+            res.send('Cant fetch from weather API');
+            console.log("Cant fetch");
+            fetch_success = false
+        }
 
         // check if have existing location
-        if(findLocation != null){
-            res.status(401);
-            res.send('Location already exists');
-        }else{
-            let url = weatherAPI_url + '&q=' + req_lat + ',' + req_long + '&aqi=no';
-            await fetch(url)
-                    .then(res => res.json())
-                    .then(res => {
-                        res_country = res['location']['country'];
-                        res_temp_c = res['current']['temp_c'];
-                        res_wind_kph = res['current']['wind_kph'];
-                        res_wind_dir = res['current']['wind_dir'];
-                        res_precip_mm = res['current']['precip_mm'];
-                        res_humidity = res['current']['humidity'];
-                        res_vis_km = res['current']['vis_km'];
-                    })
-            Location.create({
-                name: locationName,
-                country: res_country,
-                lat: req_lat,
-                long: req_long,
-                time: new Date(),
-                commentList: [],
-                temp_c: res_temp_c,
-                wind_kph: res_wind_kph,
-                wind_dir: res_wind_dir,
-                humidity: res_humidity,
-                precip_mm: res_precip_mm,
-                vis_km: res_vis_km,
-            }, (err, result) => {
-                if(err){
-                    res.status(401);
-                    res.send(err);
-                }else{
-                    res.status(201);
-                    res.send('Succesfully created location');
-                }
-            });
+        if(fetch_success){
+            if(findLocation != null){
+                res.status(401);
+                res.send('Location already exists');
+            }else{
+                Location.create({
+                    name: locationName,
+                    country: res_country,
+                    lat: req_lat,
+                    long: req_long,
+                    time: new Date(),
+                    commentList: [],
+                    temp_c: res_temp_c,
+                    wind_kph: res_wind_kph,
+                    wind_dir: res_wind_dir,
+                    humidity: res_humidity,
+                    precip_mm: res_precip_mm,
+                    vis_km: res_vis_km,
+                }, (err, result) => {
+                    if(err){
+                        res.status(401);
+                        res.send(err);
+                        console.log(err);
+                    }else{
+                        res.status(201);
+                        res.send('Succesfully created location');
+                    }
+                });
+            }
         }
     }
 });
 
 router.get('/locations', async(req,res) => {
-    if(req.cookies.permission != true){
+    if(req.cookies.permission != 'true'){
         res.status(403);
         res.send('Permission denied');
     }else{
-        let url;
+        let locationList, url;
         await Location.find().exec()
         .then((results) => {
-            for(const doc of results){
-                url = weatherAPI_url + '&q=' + doc.lat + ',' + doc.long + '&aqi=no';
-                await fetch(url)
-                    .then(res => res.json())
-                    .then(res => {
-                        doc.country = res['location']['country'];
-                        doc.temp_c = res['current']['temp_c'];
-                        doc.wind_kph = res['current']['wind_kph'];
-                        doc.wind_dir = res['current']['wind_dir'];
-                        doc.precip_mm = res['current']['precip_mm'];
-                        doc.humidity = res['current']['humidity'];
-                        doc.vis_km = res['current']['vis_km'];
-                        doc.save();
-                    })
-            }
-            res.status(200);
-            res.send(results);
+            locationList = results;
         })
         .catch((err) => {
             res.send(err);
         })
-    }
+
+        for(const doc of locationList){
+            url = weatherAPI_url + '&q=' + doc.lat + ',' + doc.long + '&aqi=no';
+            try{
+                await fetch(url)
+                .then(res => res.json())
+                .then(res => {
+                    doc.country = res['location']['country'];
+                    doc.temp_c = res['current']['temp_c'];
+                    doc.wind_kph = res['current']['wind_kph'];
+                    doc.wind_dir = res['current']['wind_dir'];
+                    doc.precip_mm = res['current']['precip_mm'];
+                    doc.humidity = res['current']['humidity'];
+                    doc.vis_km = res['current']['vis_km'];
+                    doc.save();
+                    console.log(doc.updatedAt);
+                    console.log('all done');
+                })
+            }
+            catch(e){
+                console.log(e);
+            }
+        }
+            res.status(200);
+            res.send(locationList);
+        }
 });
 
 router.get('/location', async(req,res) => {
-    if(req.cookies.permission != true){
+    if(req.cookies.permission != 'true'){
         res.status(403);
         res.send('Permission denied');
     }else{
-        let url;
+        let url, result, result_lat, result_long;
+        let exists = true;
         await Location.findOne({ name: req.body['name']}).exec()
-        .then((result) => {
+        .then((q_result) => {
+            if(q_result == null){
+                res.status(401);
+                res.send('No such location');
+                exists = false;
+            }else{
+                result = q_result;
+                result_lat = q_result.lat;
+                result_long = q_result.long;
+                console.log(result);
+            }
+            
+        })
+        .catch((err) => {
+            res.send(err);
+        })
+
+        if(exists){
             url = weatherAPI_url + '&q=' + result.lat + ',' + result.long + '&aqi=no';
-            await fetch(url)
+            try{
+                await fetch(url)
                 .then(res => res.json())
                 .then(res => {
                     result.country = res['location']['country'];
@@ -123,14 +164,67 @@ router.get('/location', async(req,res) => {
                     result.humidity = res['current']['humidity'];
                     result.vis_km = res['current']['vis_km'];
                     result.save();
+                    console.log('done');
                     })
-            res.status(200);
-            res.send(result);
+            }
+            catch(e){
+                console.log(e)
+            }
+                res.status(200);
+                res.send(result);
+            }
+        }
+});
+
+router.put('/location', async(req, res) => {
+    if(req.cookies.permission != 'true'){
+        res.status(403);
+        res.send('Permission denied');
+    }else{
+        await Location.findOne({name: req.body['new_locationName']}).exec()
+        .then((result) => {
+            findLocation = result;
         })
         .catch((err) => {
             res.send(err);
         })
+
+        if(findLocation != null){
+            res.status(401);
+            res.send('Location name already exists');
+        }else{
+            Location.findOne({name: req.body['original_locationName']}, (err, result) => {
+                if(err){
+                    res.status(401);
+                    res.send(err);
+                }else{
+                    result.name = req.body['new_locationName'];
+                    result.lat = req.body['lat'];
+                    result.long = req.body['long'];
+                    result.save();
+                    res.status(200);
+                    res.send('Updated location successfully');
+                }
+            });
+        }
     }
 });
+
+router.delete('/location', (req, res) => {
+    if(req.cookies.permission != 'true'){
+        res.status(403);
+        res.send('Permission denied');
+    }else{
+        Location.findOneAndDelete({name: req.body['locationName']}, (err, result) => {
+            if(err){
+                res.status(401);
+                res.send(err);
+            }else{
+                res.status(204);
+                res.send('Deleted location successfully');
+            }
+        })
+    }
+})
 
 module.exports = router;

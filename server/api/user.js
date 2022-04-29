@@ -7,6 +7,7 @@ const { User } = require("../model.js");
 
 router.post('/addFavourite', (req, res) => {
     if(req.cookies.username == undefined){
+        res.status(401);
         res.send('Please login before adding favorite location!');
     }else{
         User.findOne({
@@ -27,6 +28,7 @@ router.post('/addFavourite', (req, res) => {
 
 router.get('/getFavourite', (req, res) => {
     if(req.cookies.username == undefined){
+        res.status(401);
         res.send('Please login first!');
     }else{
         User.findOne({

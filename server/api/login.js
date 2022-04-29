@@ -1,20 +1,12 @@
-const { User } = require("../model.js");
-
 const express = require('express');
-const router = express.Router();
-
-const cors = require("cors");
+const cors = require("cors"); 
+let router = express.Router();
 router.use(cors());
 
-
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({extended: false}));
-
-const cookieParser = require('cookie-parser');
-app.use(cookieParser());
+const { User } = require("../model.js");
 
 
-// handle request here
+const cookieTimeOut = 1200000;
 // login to the system
 router.post('/login', (req, res) => {
     User.findOne({

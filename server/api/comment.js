@@ -9,30 +9,88 @@ router.post('/addComment', (req, res) => {
     if(req.cookies.username == undefined){
         res.send('Please login before adding favorite location!');
     }else{
-        Comment.create({
-            content: req.body['comment'],
-            username: req.cookies.username,
-        }, (err, result) => {
-            if(err){
+        Location.findOne({
+            name: req.body['locationName']
+        }, (errLoc, resLoc) => {
+            if(errLoc){
                 res.status(401);
-                res.send(err);
+                res.send(errLoc);
             }else{
-                Location.findOne({
-                    name: req.body['locationName']
-                }, (errLoc, resLoc) => {
-                    if(errLoc){
-                        res.status(401);
-                        res.send(errLoc);
-                    }else{
-                        resLoc.commentList.push(result);
-                        resLoc.save()
-                        res.status(201);
-                        res.send('Successfully created comment');
-                    }
-                });
+                if(resLoc == null){
+                    res.status(401);
+                    res.send('No such location');
+                }else{
+                    Comment.create({
+                        content: req.body['comment'],
+                        username: req.cookies.username,
+                    }, (err, result) => {
+                        if(err){
+                            res.status(401);
+                            res.send(err);
+                        }else{
+                            console.log(resLoc);
+                            resLoc.commentList.push(result);
+                            resLoc.save()
+                            res.status(201);
+                            res.send('Successfully created comment');
+                        }
+                    });
+                }
             }
         });
     }
 });
+
+/*
+app.get('/comment', (req, res) => {
+        Comment.find({}, (err, results) => {
+            if(err){
+                res.send('Cannot execute the qurey!');
+            }else{
+                res.json(results);
+            }
+        });
+    });
+
+
+    app.post('/comment/new', (req, res) => {
+        if(req.cookies.username == undefined){
+            res.send('Please login before adding comment!');
+        }else{
+            Comment.find().sort({eventId: -1}).exec((err, results) => {
+                if(err){
+                    res.send('Cannot execute the qurey!');
+                }else{
+                    let maxID = results[0].commentID;
+    
+                    Comment.create({
+                        commentID: maxID + 1,
+                        username: req.cookies.username,
+                        content: req.body['content']
+                    }, (err2, result2) => {
+                        if(err2){
+                            res.send('Cannot execute the qurey!');
+                        }else{
+                            res.send('create a new comment!');
+                        }
+                    });
+                }
+            });
+        }
+    });
+
+
+    app.get('/comment/del/:commentID', (req, res) => {
+        Comment.deleteOne({
+            commentID: req.params['commentID']
+        }, (err, result) => {
+            if(err){
+                res.send('Cannot execute the qurey!');
+            }else{
+                res.send('delete a comment!');
+            }
+        });
+    });
+*/
 
 module.exports = router;

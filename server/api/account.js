@@ -2,17 +2,8 @@ const { User } = require("../model.js");
 
 const express = require('express');
 const router = express.Router();
-
 const cors = require("cors");
 router.use(cors());
-
-
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({extended:false}));
-
-const cookieParser = require('cookie-parser');
-app.use(cookieParser());
-
 
 // handle request here
 // create a user
@@ -34,7 +25,8 @@ router.post('/account', (req, res) => {
             res.send('Username already exists');
         }else{
             res.status(201);
-            res.send('Account created successfully')
+            res.send('Account created successfully');
+            console.log("created successfully")
         }
     });
 });
