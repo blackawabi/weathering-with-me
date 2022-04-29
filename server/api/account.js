@@ -1,21 +1,36 @@
+const { User } = require("../model.js");
+
 const express = require('express');
-const cors = require("cors"); 
-let router = express.Router();
+const router = express.Router();
+
+const cors = require("cors");
 router.use(cors());
 
-const { User } = require("../model.js");
+
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended:false}));
+
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 
 // handle request here
 // create a user
 router.post('/account', (req, res) => {
+    let permission = false;
+    if(req.body['permission'] == 'true'){
+        permission = true;
+    }
+    
     User.create({
         username: req.body['username'],
         password: req.body['password'],
-        permission: false,
+        permission: permission,
         favorite: []
     }, (err, result) => {
         if(err){
             res.status(401);
+            console.log(err);
             res.send('Username already exists');
         }else{
             res.status(201);
@@ -27,7 +42,7 @@ router.post('/account', (req, res) => {
 
 // get all user information
 router.get('/accounts', (req, res) => {
-    if(req.cookies.permission != true){
+    if(req.cookies.permission != 'true'){
         res.status(403);
         res.send('Permission denied');
     }else{
@@ -95,6 +110,22 @@ router.delete('/account', (req, res) => {
         }else{
             res.status(200);
             res.send('Deleted successfully');
+        }
+    });
+});
+
+
+// delete all users (warning)
+app.get('/account/init', (req, res) => {
+    // reset index in DB (debug only) // User.syncIndexes();
+
+    User.deleteMany({}, (err, results) => {
+        if(err){
+            res.status(500);
+            res.send('Server error occurred');
+        }else{
+            res.status(200);
+            res.send('Initial successfully');
         }
     });
 });
