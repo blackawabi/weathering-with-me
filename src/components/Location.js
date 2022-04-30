@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef }  from 'react';
 import {useParams,useNavigate,useLocation,Link} from 'react-router-dom'
 import London from '../backgroundImage/London.png'
-import { Grid,Paper,Container, Box, Fab, List, ListItem, ListItemText, Typography, TextField } from '@mui/material';
+import { Grid,Paper,Container, Box, Fab, List, ListItem, ListItemText, FormControl, InputLabel, OutlinedInput,IconButton, TextField } from '@mui/material';
 import MessageIcon from '@mui/icons-material/Message';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import NorthIcon from '@mui/icons-material/North';
@@ -17,6 +17,8 @@ import { faCloudRain } from '@fortawesome/free-solid-svg-icons';
 import { faDroplet } from '@fortawesome/free-solid-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { faWind } from '@fortawesome/free-solid-svg-icons';
+import SendIcon from '@mui/icons-material/Send';
+import { InputAdornment } from '@mui/material';
 
 /* eslint import/no-webpack-loader-syntax: off */
 import mapboxgl from '!mapbox-gl';
@@ -102,13 +104,31 @@ function Location(){
     const handleInputComment=(event)=>{
         setComment(event.target.value)
     }
+    const handleSend=()=>{
+        fetch('http://localhost:4000/addComment',{
+            method:"POST",
+            body: new URLSearchParams({
+                "locationName":info.name,
+            }),
+        }).then(res=>{
+            if(res.status==201){
+                setComment("")
+                fetch("http://localhost:4000/location",{
+                    body: new URLSearchParams({
+                        "name":"france update"
+                    }),
+                })   
+                .then(res=>res.json)
+                .then(data=>console.log(data))
+            }
+        })
+    }
     const handleFavorite=(event)=>{
         fetch('http://localhost:4000/addFavourite',{
             method:"POST",
             body: new URLSearchParams({
                 "locationName":info.name,
             }),
-            credentials: 'include'
         }).then(res=>setStatus(res.status))
         .then(()=>{
             if(status==200){
@@ -120,6 +140,9 @@ function Location(){
                 //}
             }
         })       
+    }
+    const handleMouseDown=(event)=>{
+        event.preventDefault();
     }
     return(
         <>
@@ -263,22 +286,25 @@ function Location(){
                         }} 
                     >
 
+
+                        <h1 class="display-2 text-center text-white" id="map0" style={{userSelect: "none"}}>
+                            Comment 
+                        </h1>
+                          
                         <Paper elevation={24} sx={{
                             height:{
                                 xs:400,
                                 md:500
                             }, 
-                            px:2
+                            px:2,
+                            background: "linear-gradient(to bottom right, #33ccff 0%, #ff99cc 100%)"
                         }} >
-                            <Typography variant='h4' sx={{pt:2}}>
-                                <MessageIcon  fontSize="large"/>Comment
-                            </Typography>
                             <List sx={{
                                 height:{
-                                    xs:240,
-                                    md:340
+                                    xs:310,
+                                    md:410
                                 }
-                                , backgroundColor: "#e3f2fd", my:2}}>
+                                , my:2}}>
                                 {info.commentList.map((data,i)=>(
                                     <ListItem key={i}>
                                         <ListItemText>
@@ -287,12 +313,26 @@ function Location(){
                                     </ListItem>
                                 ))}
                             </List>
-                            <TextField
-                                label="Your Comment"
-                                value={comment}
-                                onChange={handleInputComment}
-                                fullWidth
-                            />                                
+                  
+                            <FormControl fullWidth variant="outlined">
+                                <InputLabel>Your Comment</InputLabel>
+                                <OutlinedInput
+                                    value={comment}
+                                    onChange={handleInputComment}
+                                    endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={handleSend}
+                                            onMouseDown={handleMouseDown}
+                                            edge="end"
+                                        >
+                                            <SendIcon/>
+                                        </IconButton>
+                                    </InputAdornment>
+                                    }
+                                    label="Password"
+                                />
+                            </FormControl>                          
                         </Paper>
             
 
