@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState }  from 'react';
 import {useNavigate} from 'react-router-dom'
 import London from '../backgroundImage/London.png'
 import { Container,TextField, Box, Button } from '@mui/material';
@@ -6,8 +6,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import KeyIcon from '@mui/icons-material/Key';
 
 function Login(){
-    const [username, setUsername]=useState(null);
-    const [password, setPassword]=useState(null);
+    const [status, setStatus]=useState(null);
+    const [username, setUsername]=useState("");
+    const [password, setPassword]=useState("");
     const [unHelperText,setUnHelperText]=useState(null);
     const [pwHelperText,setPwHelperText]=useState(null);
     const handleUsernameChange=(event)=>{
@@ -35,28 +36,26 @@ function Login(){
 
         }*/
 
-        fetch('http://223.16.119.208:4000/login', {
+        fetch('http://localhost:4000/login', {
             method: 'POST', 
             body: new URLSearchParams({
                 "username":username,
                 "password":password
             }),   
+            credentials: 'include',
         })
-        .then(res=>res.text())
-        .then(text=>console.log(text))
+        .then(res=>setStatus(res.status))
         .catch((error) => {
             console.error('Error:', error);
         });
-        localStorage.setItem("user","abc")
-
-
-
-
 
         
+        
     }
-
-    return(
+    if(status==200){
+        navigate("/")
+    }
+    else return(
         <>
             <div style={{
                 height: "100vh",
@@ -125,6 +124,7 @@ function Login(){
             </div>
         </>
     )
+
 }
 
 export default Login
