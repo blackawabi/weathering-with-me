@@ -71,16 +71,20 @@ function Map(props){
 function Location(){
     
     useEffect(()=>{
-        /*
-        fetch("")
+        fetch("http://localhost:4000/location",{
+            body: new URLSearchParams({
+                "name":"france update"
+            }),
+        })   
         .then(res=>res.json)
-        .then(data=>setInfo(data))*/
+        .then(data=>console.log(data))
         
         document.addEventListener("scroll", textFade);
         
     })
     const [comment,setComment]=useState("")
-    const [heartColor, setHeartColor]=useState("#ffffff")
+    const [heartColor, setHeartColor]=useState("default")
+    const [status,setStatus]=useState(null);
     const [info, setInfo]=useState({
         name:"London",
         country:"UK",
@@ -99,16 +103,27 @@ function Location(){
         setComment(event.target.value)
     }
     const handleFavorite=(event)=>{
-        //fetch("")
-        if(heartColor.localeCompare("#ffffff")==0){
-            setHeartColor("#f06292")
-        }else{
-            setHeartColor("#ffffff")
-        }
+        fetch('http://localhost:4000/addFavourite',{
+            method:"POST",
+            body: new URLSearchParams({
+                "locationName":info.name,
+            }),
+            credentials: 'include'
+        }).then(res=>setStatus(res.status))
+        .then(()=>{
+            if(status==200){
+                //if(heartColor.localeCompare("#ffffff")==0){
+                    setHeartColor("error")
+                //}
+                //else{
+                //    setHeartColor("#ffffff")
+                //}
+            }
+        })       
     }
     return(
         <>
-            <Fab color="secondary" 
+            <Fab color={heartColor} 
                 sx={{
                     left:{
                         xs:20,
@@ -120,7 +135,7 @@ function Location(){
                     }, 
                     position:"fixed"
                 }} onClick={handleFavorite}>
-                <FavoriteIcon sx={{ color: heartColor }} />
+                <FavoriteIcon  />
             </Fab>
             <div style={{
                 height: "auto",
