@@ -73,6 +73,8 @@ function Map(props){
 function Location(){
     
     useEffect(()=>{
+        if(info==null || heartColor==null){
+
         fetch("http://localhost:4000/location?name=United Kingdom")
         .then(res=>res.json())
         .then(data=>setInfo(data))
@@ -91,9 +93,8 @@ function Location(){
             }
 
         })
-        
-        document.addEventListener("scroll", textFade);
-        
+    }
+        document.addEventListener("scroll", textFade);      
     })
     const [comment,setComment]=useState("")
     const [heartColor, setHeartColor]=useState()
