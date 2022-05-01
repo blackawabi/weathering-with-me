@@ -132,7 +132,7 @@ router.get('/location', async(req,res) => {
     }else{
         let url, result, result_lat, result_long;
         let exists = true;
-        await Location.findOne({ name: req.body['name']}).exec()
+        await Location.findOne({ name: req.query['name']}).exec()
         .then((q_result) => {
             if(q_result == null){
                 res.status(401);
