@@ -73,34 +73,32 @@ function Map(props){
 function Location(){
     
     useEffect(()=>{
-        fetch("http://localhost:4000/location",{
-            body: new URLSearchParams({
-                "name":"france update"
-            }),
-        })   
-        .then(res=>res.json)
-        .then(data=>console.log(data))
+        fetch("http://localhost:4000/location?name=United Kingdom")
+        .then(res=>res.json())
+        .then(data=>setInfo(data))
+
+        fetch("http://localhost:4000/getFavourite",{
+            credentials: 'include',
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            for(let x of data){
+                if(x==info.name){
+                    setHeartColor("error")
+                    break;
+                }
+                setHeartColor("default")
+            }
+
+        })
         
         document.addEventListener("scroll", textFade);
         
     })
     const [comment,setComment]=useState("")
-    const [heartColor, setHeartColor]=useState("default")
+    const [heartColor, setHeartColor]=useState()
     const [status,setStatus]=useState(null);
-    const [info, setInfo]=useState({
-        name:"London",
-        country:"UK",
-        latitude:42.3,
-        longitude:-70.9,
-        time: "2021-02-21 08:30",
-        commentList:[],
-        temp_c:3,
-        wind_kph: 4,
-        wind_dir: "SW",
-        humidity: 6,
-        precip_mm: 7,
-        vis_km: 8
-    })
+    const [info, setInfo]=useState()
     const handleInputComment=(event)=>{
         setComment(event.target.value)
     }
@@ -109,42 +107,46 @@ function Location(){
             method:"POST",
             body: new URLSearchParams({
                 "locationName":info.name,
+                "comment":comment
             }),
+            credentials: 'include',
         }).then(res=>{
             if(res.status==201){
                 setComment("")
-                fetch("http://localhost:4000/location",{
-                    body: new URLSearchParams({
-                        "name":"france update"
-                    }),
-                })   
-                .then(res=>res.json)
+                fetch("http://localhost:4000/location?name=United Kingdom")
+                .then(res=>res.json())
                 .then(data=>console.log(data))
             }
         })
     }
     const handleFavorite=(event)=>{
-        fetch('http://localhost:4000/addFavourite',{
+        
+        fetch('http://localhost:4000/updateFavourite',{
             method:"POST",
             body: new URLSearchParams({
                 "locationName":info.name,
             }),
-        }).then(res=>setStatus(res.status))
-        .then(()=>{
-            if(status==200){
-                //if(heartColor.localeCompare("#ffffff")==0){
-                    setHeartColor("error")
-                //}
-                //else{
-                //    setHeartColor("#ffffff")
-                //}
-            }
-        })       
+            credentials: 'include',
+        }).then(res=>{
+            res.text().then(text=>{
+                if(res.status==200){
+                    if(text.localeCompare('Successfully removed favourite location')==0){
+                        setHeartColor("default")
+                    }else{
+                        setHeartColor("error")
+                    }
+                }
+            })
+        })
+
     }
+
     const handleMouseDown=(event)=>{
         event.preventDefault();
     }
-    return(
+    if(info==null || heartColor==null){
+        return<>wait</>
+    }else return(
         <>
             <Fab color={heartColor} 
                 sx={{
@@ -271,7 +273,7 @@ function Location(){
                 <Box sx={{pb:"40vh"}}>
                     <Container maxWidth="lg" id="map2">
                         
-                        <Map lng={info.longitude} lat={info.latitude}/>
+                        <Map lng={info.long} lat={info.lat}/>
             
                     </Container>
 
@@ -296,19 +298,23 @@ function Location(){
                                 xs:400,
                                 md:500
                             }, 
-                            px:2,
-                            background: "linear-gradient(to bottom right, #33ccff 0%, #ff99cc 100%)"
+                            p:2,
+                            background: "linear-gradient(to bottom right, #33ccff 0%, #ff99cc 100%)",
+                      
                         }} >
                             <List sx={{
                                 height:{
-                                    xs:310,
-                                    md:410
+                                    xs:280,
+                                    md:380
                                 }
+                                ,overflow: 'auto'
                                 , my:2}}>
                                 {info.commentList.map((data,i)=>(
                                     <ListItem key={i}>
                                         <ListItemText>
-                                            {info.commentList[i].username}: {info.commentList[i].content}
+                                            <p class="display-6 text-white">
+                                                {info.commentList[i].username}: {info.commentList[i].content}
+                                            </p>
                                         </ListItemText>
                                     </ListItem>
                                 ))}
