@@ -44,7 +44,8 @@ function Login(){
             }),   
             credentials: 'include',
         })
-        .then(res=>setStatus(res.status))
+        .then(res=>res.text())
+        .then(()=>navigate("/"))
         .catch((error) => {
             console.error('Error:', error);
         });
@@ -52,10 +53,7 @@ function Login(){
         
         
     }
-    if(status==200){
-        navigate("/")
-    }
-    else return(
+    return(
         <>
             <div style={{
                 height: "100vh",
