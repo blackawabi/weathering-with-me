@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef }  from 'react';
-import {useParams,useNavigate,useLocation,Link} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import London from '../backgroundImage/London.png'
 import { Grid,Paper,Container, Box, Fab, List, ListItem, ListItemText, FormControl, InputLabel, OutlinedInput,IconButton, TextField } from '@mui/material';
-import MessageIcon from '@mui/icons-material/Message';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import NorthIcon from '@mui/icons-material/North';
 import NorthEastIcon from '@mui/icons-material/NorthEast';
@@ -19,13 +18,13 @@ import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { faWind } from '@fortawesome/free-solid-svg-icons';
 import SendIcon from '@mui/icons-material/Send';
 import { InputAdornment } from '@mui/material';
+import google_images from "free-google-images"
 
 /* eslint import/no-webpack-loader-syntax: off */
 import mapboxgl from '!mapbox-gl';
 mapboxgl.accessToken = 'pk.eyJ1IjoicGF1Y3cwOTI1IiwiYSI6ImNsMjlvdXFvMTBsZHQzZW8wcjllOWExdXIifQ._ITgimxUOGgbCE1oi4U8MQ';
 
 var textFade = function(){
-    let plus=true;
     const weatherInfo = document.getElementById("weather-info");
     const weatherInfo2 = document.getElementsByClassName("weather-display")
 
@@ -71,13 +70,26 @@ function Map(props){
     );
 }
 function Location(){
-    
+    let navigate=useNavigate();
+    let {code}=useParams();
+    const [comment,setComment]=useState("")
+    const [heartColor, setHeartColor]=useState()
+    const [info, setInfo]=useState()
+    const [background,setBackground]=useState("a")
     useEffect(()=>{
-        if(info==null || heartColor==null){
+        if(info==null  || background==null){
 
-        fetch("http://localhost:4000/location?name=United Kingdom")
+        fetch("http://localhost:4000/location?name="+code)
         .then(res=>res.json())
-        .then(data=>setInfo(data))
+        .then(data=>{
+            setInfo(data)
+
+            //google_images.searchRandom(data.country+" city view",true)
+            //.then(result=>setBackground(result.image.url))
+
+        })
+        //.catch(()=>navigate("/error"))
+        
 
         fetch("http://localhost:4000/getFavourite",{
             credentials: 'include',
@@ -96,10 +108,7 @@ function Location(){
     }
         document.addEventListener("scroll", textFade);      
     })
-    const [comment,setComment]=useState("")
-    const [heartColor, setHeartColor]=useState()
-    const [status,setStatus]=useState(null);
-    const [info, setInfo]=useState()
+ 
     const handleInputComment=(event)=>{
         setComment(event.target.value)
     }
@@ -114,7 +123,7 @@ function Location(){
         }).then(res=>{
             if(res.status==201){
                 setComment("")
-                fetch("http://localhost:4000/location?name=United Kingdom")
+                fetch("http://localhost:4000/location?name="+code)
                 .then(res=>res.json())
                 .then(data=>console.log(data))
             }
@@ -145,7 +154,8 @@ function Location(){
     const handleMouseDown=(event)=>{
         event.preventDefault();
     }
-    if(info==null || heartColor==null){
+
+    if(info==null || background==null){
         return<>wait</>
     }else return(
         <>
@@ -238,10 +248,10 @@ function Location(){
                                 xs:"60vh"
                             }
                         }} id="weather-info" >
-                            <h1 class="display-1 text-right text-white" style={{userSelect: "none"}}>
-                                {info.name}
+                            <h1 className="display-1 text-right text-white" style={{userSelect: "none"}}>
+                                {info.country}
                             </h1>
-                            <h6 class="display-1 text-right text-white"style={{userSelect: "none"}}>
+                            <h6 className="display-1 text-right text-white"style={{userSelect: "none"}}>
                                 {info.temp_c}°C
                             </h6>
                         </Box>
@@ -262,10 +272,10 @@ function Location(){
       
 
                     <h1>
-                        <span class="display-2 text-left text-white" id="map0" sx={{display:"inline"}} style={{userSelect: "none"}}>
+                        <span className="display-2 text-left text-white" id="map0" sx={{display:"inline"}} style={{userSelect: "none"}}>
                             You&nbsp;   
                         </span>
-                        <span class="display-2 text-left text-white" id="map1" sx={{display:"inline", opacity:0}} style={{userSelect: "none"}}>
+                        <span className="display-2 text-left text-white" id="map1" sx={{display:"inline", opacity:0}} style={{userSelect: "none"}}>
                             are here...    
                         </span>
                     
@@ -290,7 +300,7 @@ function Location(){
                     >
 
 
-                        <h1 class="display-2 text-center text-white" id="map0" style={{userSelect: "none"}}>
+                        <h1 className="display-2 text-center text-white" id="map0" style={{userSelect: "none"}}>
                             Comment 
                         </h1>
                           
@@ -313,7 +323,7 @@ function Location(){
                                 {info.commentList.map((data,i)=>(
                                     <ListItem key={i}>
                                         <ListItemText>
-                                            <p class="display-6 text-white">
+                                            <p className="display-6 text-white">
                                                 {info.commentList[i].username}: {info.commentList[i].content}
                                             </p>
                                         </ListItemText>
