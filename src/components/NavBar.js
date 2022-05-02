@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import React, { useState }  from 'react';
+import { Button } from "@mui/material";
 
 
 function getCookie(name) {
@@ -16,15 +17,12 @@ function NavBar(){
         fetch('http://localhost:4000/logout',{
             credentials: 'include',
         })
-        .then(res=>setStatus(res.status))
+        .then(res=>navigate("/login"))
         .catch((error) => {
             console.error('Error:', error);
         });
     }
-    if(status==200){
-        navigate(0)
-    }
-    else return(
+    return(
         <nav className="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
             <div className="container px-4 px-lg-5">
                 <div className="navbar-brand">
@@ -38,6 +36,7 @@ function NavBar(){
                     {getCookie("username")!=null && getCookie("username")!="admin" &&
                         <>
                             <li className="nav-item">
+                                
                                 <Link to="/" className="nav-link">
                                     {getCookie("username")}
                                 </Link>
@@ -48,7 +47,7 @@ function NavBar(){
                                 </Link>    
                             </li>        
                             <li className="nav-item">
-                                <Link to="/" className="nav-link" onClick={logout}>
+                                <Link to="#" className="nav-link" onClick={logout}>
                                     Logout
                                 </Link>
                             </li>
@@ -62,7 +61,7 @@ function NavBar(){
                                 </Link>
                             </li>  
                             <li className="nav-item">
-                                <Link to="/" className="nav-link" onClick={logout}>
+                                <Link to="#" className="nav-link" onClick={logout}>
                                     Logout
                                 </Link>
                             </li>
