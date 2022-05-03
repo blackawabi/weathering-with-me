@@ -5,10 +5,10 @@ import Location from './components/Location';
 import NavBar from './components/NavBar';
 import Login from './components/Login'
 import StickyHeadTable from './components/Profile';
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect, useMemo }  from 'react';
 import Admin from './components/Admin';
-import London from './backgroundImage/London.png'
-
+import London from './backgroundImage/London.png' 
+import { AuthContext } from './context/AuthContext';
 //ref
 function getCookie(name) {
   const value = `; ${document.cookie}`;
@@ -18,34 +18,36 @@ function getCookie(name) {
 
 function App() {
   const [auth, setAuth]=useState(false);
+  const value=useMemo(()=>({auth,setAuth}),[auth,setAuth])
   useEffect(()=>{
-      let user=getCookie("username");
-      if(user!=null){
-          setAuth(true);
-      }
+    if(getCookie("username")!=null){
+      setAuth(true)
+    }
   })
+ 
+
   return (
-    <>
+    <AuthContext.Provider value={value}>
       <NavBar/>
       <Routes>
-        {auth==false &&
-        <Route path="/login" element={<Login />}/>
+        {auth==false&&
+          <Route path="/login" element={<Login />}/>
         }
         {auth==true &&
-        <Route path="/" element={<Home />}/>
-        }
-        {auth==true &&
+          <>
+          <Route path="/" element={<Home />}/>
           <Route path="/location/:code" element={<Location />}/>   
-        }
-        {auth==true &&
           <Route path="/profile" element={<StickyHeadTable />} />
+            {
+              getCookie("username")=="admin" &&
+              <Route path="/admin" element={<Admin />} />
+            }
+          </>
         }
-        {getCookie("username")=="admin" &&
-          <Route path="/admin" element={<Admin />} />
-        }
-        <Route path="*" element={<NotFound/>}/>
+          <Route path="error" element={<NotFound/>}/>
+          <Route path="*" element={auth==false?<Navigate to="/login"/>:<Navigate to="error"/>}/>
       </Routes>
-    </>
+    </AuthContext.Provider>
     
   );
 }

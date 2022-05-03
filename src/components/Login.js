@@ -1,11 +1,13 @@
-import React, { useState }  from 'react';
+import React, { useState, useContext }  from 'react';
 import {useNavigate} from 'react-router-dom'
 import London from '../backgroundImage/London.png'
 import { Container,TextField, Box, Button } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import KeyIcon from '@mui/icons-material/Key';
+import { AuthContext } from '../context/AuthContext';
 
 function Login(){
+    const {auth, setAuth}=useContext(AuthContext);
     const [status, setStatus]=useState(null);
     const [username, setUsername]=useState("");
     const [password, setPassword]=useState("");
@@ -45,7 +47,10 @@ function Login(){
             credentials: 'include',
         })
         .then(res=>res.text())
-        .then(()=>navigate("/"))
+        .then(()=>{
+            setAuth(true)
+            navigate("/")
+        })
         .catch((error) => {
             console.error('Error:', error);
         });
