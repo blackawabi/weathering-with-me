@@ -48,7 +48,9 @@ function Login(){
         })
         .then(res=>res.text())
         .then(()=>{
-            setAuth(true)
+            if(username=="admin")
+                setAuth(-1)
+            else setAuth(1)
             navigate("/")
         })
         .catch((error) => {

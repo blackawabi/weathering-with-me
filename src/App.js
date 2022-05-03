@@ -17,12 +17,14 @@ function getCookie(name) {
 }
 
 function App() {
-  const [auth, setAuth]=useState(false);
+  const [auth, setAuth]=useState();
   const value=useMemo(()=>({auth,setAuth}),[auth,setAuth])
   useEffect(()=>{
-    if(getCookie("username")!=null){
-      setAuth(true)
-    }
+    if(getCookie("username")=="admin"){
+      setAuth(-1)
+    }else if(getCookie("username")!=null){
+      setAuth(1)
+    }else setAuth(0)
   })
  
 
@@ -30,22 +32,23 @@ function App() {
     <AuthContext.Provider value={value}>
       <NavBar/>
       <Routes>
-        {auth==false&&
+        {auth==0&&
           <Route path="/login" element={<Login />}/>
         }
-        {auth==true &&
+        {auth!=0 &&
           <>
           <Route path="/" element={<Home />}/>
           <Route path="/location/:code" element={<Location />}/>   
           <Route path="/profile" element={<StickyHeadTable />} />
-            {
-              getCookie("username")=="admin" &&
-              <Route path="/admin" element={<Admin />} />
-            }
+            
           </>
         }
+        {
+          auth==-1 &&
+          <Route path="/admin" element={<Admin />} />
+        }
           <Route path="error" element={<NotFound/>}/>
-          <Route path="*" element={auth==false?<Navigate to="/login"/>:<Navigate to="error"/>}/>
+          <Route path="*" element={auth==0?<Navigate to="/login"/>:<Navigate to="error"/>}/>
       </Routes>
     </AuthContext.Provider>
     

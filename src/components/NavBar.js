@@ -19,7 +19,7 @@ function NavBar(){
             credentials: 'include',
         })
         .then(res=>{
-            setAuth(false)
+            setAuth(0)
             navigate("/login")
         })
         .catch((error) => {
@@ -30,12 +30,12 @@ function NavBar(){
         <nav className="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
             <div className="container px-4 px-lg-5">
                 <div className="navbar-brand">
-                    {auth==false &&
+                    {auth==0 &&
                     <Link to="/login" className="navbar-brand">
                         Weathering with me
                     </Link>
                     }
-                    {auth==true &&
+                    {auth!=0 &&
                     <Link to="/" className="navbar-brand">
                         Weathering with me
                     </Link>
@@ -44,7 +44,7 @@ function NavBar(){
                 <button className="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon"></span></button>
                 <div className="collapse navbar-collapse" id="navbarResponsive">
                     <ul className="navbar-nav ms-auto my-2 my-lg-0">
-                    {auth!=false && getCookie("username")!="admin" &&
+                    {auth==1 &&
                         <>
                             <li className="nav-item">
                                 
@@ -64,7 +64,7 @@ function NavBar(){
                             </li>
                         </>
                     }
-                    {getCookie("username")=="admin" &&
+                    {auth==-1 &&
                         <>
                             <li className="nav-item">
                                 <Link to="/admin" className="nav-link">
