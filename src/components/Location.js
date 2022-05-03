@@ -182,7 +182,7 @@ function Location(){
                 backgroundAttachment: "fixed"
             }}> 
                 <Grid container spacing={2} columns={{xs:6, md:12}}>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                         <Box sx={{
                             pl:{
                                 xs:"5vh",
@@ -234,7 +234,7 @@ function Location(){
                         </Box>
                         
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={8}>
                         <Box sx={{
                             pr:{
                                 xs:"5vh",
@@ -249,7 +249,10 @@ function Location(){
                             }
                         }} id="weather-info" >
                             <h1 className="display-1 text-right text-white" style={{userSelect: "none"}}>
-                                {info.country}
+                                {info.country=="United Kingdom"?
+                                    "U.K.":info.country
+                                }
+
                             </h1>
                             <h6 className="display-1 text-right text-white"style={{userSelect: "none"}}>
                                 {info.temp_c}°C
