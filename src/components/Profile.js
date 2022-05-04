@@ -1,4 +1,5 @@
-import * as React from 'react';
+// import * as React from 'react';
+import React, { useState, useContext, useEffect, useRef }  from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,6 +14,7 @@ import London from '../backgroundImage/London.png'
 import { Container,TextField, Box, Button } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import KeyIcon from '@mui/icons-material/Key';
+import { AuthContext } from '../context/AuthContext';
 
 import users from "./userdata";
 
@@ -20,28 +22,28 @@ const columns = [
   { id: 'name', label: 'Location', minWidth: 170 },
 ];
 
-function createData(name, code, population, size) {
-  // const density = population / size;
-  return { name, code, population, size };
-}
+// function createData(name, code, population, size) {
+//   // const density = population / size;
+//   return { name, code, population, size };
+// }
 
-const rows = [
-  createData('India'),
-  createData('China'),
-  createData('Italy'),
-  createData('United States'),
-  createData('Canada'),
-  createData('Australia'),
-  createData('Germany'),
-  createData('Ireland'),
-  createData('Mexico'),
-  createData('Japan'),
-  createData('France'),
-  createData('United Kingdom'),
-  createData('Russia'),
-  createData('Nigeria'),
-//   createData('Brazil'),
-];
+// const rows = [
+//   createData('India'),
+//   createData('China'),
+//   createData('Italy'),
+//   createData('United States'),
+//   createData('Canada'),
+//   createData('Australia'),
+//   createData('Germany'),
+//   createData('Ireland'),
+//   createData('Mexico'),
+//   createData('Japan'),
+//   createData('France'),
+//   createData('United Kingdom'),
+//   createData('Russia'),
+//   createData('Nigeria'),
+// //   createData('Brazil'),
+// ];
 
 function createUserData(username, password, favourite, permission) {
   // const density = population / size;
@@ -51,8 +53,6 @@ function createUserData(username, password, favourite, permission) {
 // function extractUserFavourite({users}) {
 //   return {users.favourite}
 // }; 
-
-
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -87,8 +87,21 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 // }
 
 export default function StickyHeadTable() {
+  const {auth, setAuth}=useContext(AuthContext);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [info, setInfo]=useState([])
+
+  useEffect(() => {
+    fetch("http://localhost:4000/getFavourite",{
+            credentials: 'include',
+        })
+    .then(res=>res.json())
+    .then(data=>{
+        setInfo(data)
+    })
+  })
+
 
 //   const handleChangePage = (event, newPage) => {
 //     setPage(newPage);
@@ -124,6 +137,9 @@ export default function StickyHeadTable() {
             }
             }} >
                 <h2 className="text-center ">Favourite Location</h2>
+                {/* <p>{info.map(infos =>{
+                  return <option value={infos}>{infos}</option>
+                })}</p> */}
                 <hr className="divider divider-dark text-center" />
                 
                 <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -165,7 +181,8 @@ export default function StickyHeadTable() {
                       </TableBody> */}
 
                       <TableBody>
-                        {users[0].favourite.map((row) => (
+                        {/* {users[0].favourite.map((row) => ( */}
+                        {info.map((row) => ( 
                           <StyledTableRow key={row.name}>
                             <StyledTableCell component="th" scope="row">
                               {row}
