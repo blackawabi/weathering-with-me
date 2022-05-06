@@ -40,7 +40,7 @@ class Markmap extends React.Component{
             var marker = new mapboxgl.Marker()
             .setLngLat([mark.lng, mark.lat])
             .setPopup(new mapboxgl.Popup({offset: 30})
-            .setHTML('<h4 onclick="alert()">' + mark.name + '</h4>')) // onclick here and jump to the location detail
+            .setHTML('<a href="http://localhost/location/' + mark.name + '">' + mark.name + '</a>')) // onclick here and jump to the location detail
             .addTo(map);
 
         })
