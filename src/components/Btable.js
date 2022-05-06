@@ -31,7 +31,7 @@ function Btable() {
         method: 'POST',
         body: new URLSearchParams(form_body),
         })
-        .then(res => res.text())
+        .then(res => res.json())
         .then(data => {
             console.log(data);
             setData(data);
