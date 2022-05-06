@@ -27,7 +27,7 @@ function Btable() {
     //   //res.date.forEach(obj,ind=>obj.__id=ind)
     //   }
     // );
-        fetch('http://119.246.79.200:8080/login', {
+        fetch('http://119.246.79.200:8080/locations', {
         method: 'POST',
         body: new URLSearchParams(form_body),
         })
