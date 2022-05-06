@@ -40,20 +40,6 @@ function Btable() {
   };
 
   const columns=[
-  //   {
-  //   dataField:"email",
-  //   text:"Email",
-  //   sort: true ,
-  //   filter: textFilter()
-  // },
-  // {
-  //   dataField:"postId",
-  //   text:"P id"
-  // },
-  // {
-  //   dataField:"name",
-  //   text:"Name"
-  // }
   {
     dataField:"name",
     text:"Name",
