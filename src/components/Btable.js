@@ -21,7 +21,7 @@ function Btable() {
     getData();
   }, []);
   const getData = () => {
-        fetch('http://119.246.79.200:8080/locations', {
+        fetch('http://localhost:4000/locations', {
         //method: 'POST',
         //body: new URLSearchParams(form_body),
         method: 'GET',
