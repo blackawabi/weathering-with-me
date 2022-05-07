@@ -7,8 +7,10 @@ import Login from './components/Login'
 import StickyHeadTable from './components/Profile';
 import React, { useState, useEffect, useMemo }  from 'react';
 import Admin from './components/Admin';
+import Wea from './components/testWea';
 import London from './backgroundImage/London.png' 
 import { AuthContext } from './context/AuthContext';
+import Markmap from './components/Markmap';
 //ref
 function getCookie(name) {
   const value = `; ${document.cookie}`;
@@ -37,7 +39,7 @@ function App() {
         }
         {auth!=0 &&
           <>
-          <Route path="/" element={<Home />}/>
+          <Route path="/" element={<Wea />}/>
           <Route path="/location/:code" element={<Location />}/>   
           <Route path="/profile" element={<StickyHeadTable />} />
             
