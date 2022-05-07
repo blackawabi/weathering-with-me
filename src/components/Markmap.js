@@ -51,12 +51,16 @@ class Markmap extends React.Component{
 
     render(){
         return(
-            <div>
-                <div ref={el => this.mapContainer =el} style={{width:'160vh', height:'500px'}}></div>
-            </div>
-            <div className="container">
-                <Btable />
-            </div>
+            <>
+            
+                <div>
+                    <div ref={el => this.mapContainer =el} style={{width:'160vh', height:'500px'}}></div>
+                </div>
+                <div className="container">
+                    <Btable />
+                </div>
+            </>
+            
         );
     }
 }
