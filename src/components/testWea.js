@@ -10,6 +10,7 @@ import {useNavigate} from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
+import London from '../backgroundImage/London.png'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidmFuaG9ubm4iLCJhIjoiY2wyaG1oYXJtMGV6bjNkb2p1ZDFtZ2JyNiJ9.GujAFNhl0AWRIMuXI2R1zA';
 
@@ -145,74 +146,87 @@ export default function Wea() {
 
     return(
         <>
-        <div>
-            <br />
-            <br />
-            <br />
-            <br />
-        </div>
-        <div class="container col-12">
-            <div ref={mapContainer} className="map-container" style={{width: "800px", height: "500px"}}/>
-        </div>
-        <div class="container col-12">
-            <input type="text" id="searchBox" onKeyUp={()=>{search();}} placeholder="Search location name"/>
-        </div>
-        <div class="container col-12">
-            <table id="mainTable" class="table table-hover">
-                <thead>
+        <div style={{
+                height: "100vh",
+                width: "100%",
+                backgroundImage: `linear-gradient(rgba(182, 187, 205, 0.7), rgba(4,9,30,0.7)), url(${London})`,  
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                position: "fixed",
+            }}>
+            <div>
+                <br />
+                <br />
+                <br />
+                <br />
+            </div>
+            <div class="container col-12">
+                <div ref={mapContainer} className="map-container" style={{width: "800px", height: "500px"}}/>
+            </div>
+            <div class="container col-12">
+                <input type="text" id="searchBox" onKeyUp={()=>{search();}} placeholder="Search location name"/>
+            </div>
+            <div class="container col-12"
+                style={{
+                    backgroundColor: "white"
+                }}
+            >
+                <table id="mainTable" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col" style={{backgroundColor: "azure"}} onclick={()=>{sortTable(0);}}>Location</th>
+                            <th scope="col" style={{backgroundColor: "azure"}} onclick={()=>{sortTable(1);}}>Long/Lat</th>
+                            <th scope="col" style={{backgroundColor: "azure"}} onclick={()=>{sortTable(2);}}>Temperature</th>
+                            <th scope="col" style={{backgroundColor: "azure"}}>Wind Speed</th>
+                            <th scope="col" style={{backgroundColor: "azure"}}>Wind Direction</th>
+                            <th scope="col" style={{backgroundColor: "azure"}}>Humidity</th>
+                            <th scope="col" style={{backgroundColor: "azure"}}>Precipitation</th>
+                            <th scope="col" style={{backgroundColor: "azure"}}>Vis</th>
+                            
+                        </tr>
+                    </thead>
                     <tr>
-                        <th scope="col" style={{backgroundColor: "azure"}} onclick={()=>{sortTable(0);}}>Location</th>
-                        <th scope="col" style={{backgroundColor: "azure"}} onclick={()=>{sortTable(1);}}>Long/Lat</th>
-                        <th scope="col" style={{backgroundColor: "azure"}} onclick={()=>{sortTable(2);}}>Temperature</th>
-                        <th scope="col" style={{backgroundColor: "azure"}}>Wind Speed</th>
-                        <th scope="col" style={{backgroundColor: "azure"}}>Wind Direction</th>
-                        <th scope="col" style={{backgroundColor: "azure"}}>Humidity</th>
-                        <th scope="col" style={{backgroundColor: "azure"}}>Precipitation</th>
-                        <th scope="col" style={{backgroundColor: "azure"}}>Vis</th>
-                        
+                        <td onclick={()=>{flon(0);}}><strong>London</strong></td>
+                        <td>-0.118</td>
+                        <td>28</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
                     </tr>
-                </thead>
-                <tr>
-                    <td onclick={()=>{flon(0);}}><strong>London</strong></td>
-                    <td>-0.118</td>
-                    <td>28</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td onclick={()=>{flon(1);}}><strong>Hongkong</strong></td>
-                    <td>114.177</td>
-                    <td>25</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td onclick={()=>{flon(2);}}><strong>Paris</strong></td>
-                    <td>2.349</td>
-                    <td>10</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td onclick={()=>{flon(3);}}><strong>Berlin</strong></td>
-                    <td>13.404</td>
-                    <td>10</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                </tr>
-            </table>
+                    <tr>
+                        <td onclick={()=>{flon(1);}}><strong>Hongkong</strong></td>
+                        <td>114.177</td>
+                        <td>25</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td onclick={()=>{flon(2);}}><strong>Paris</strong></td>
+                        <td>2.349</td>
+                        <td>10</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td onclick={()=>{flon(3);}}><strong>Berlin</strong></td>
+                        <td>13.404</td>
+                        <td>10</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                </table>
+            </div>
         </div>
         </>
     );
