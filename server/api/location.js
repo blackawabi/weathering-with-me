@@ -16,10 +16,10 @@ router.post('/location', async(req, res) => {
     let req_long = req.body['long'];
     let res_country, res_temp_c, res_wind_kph, res_wind_dir, res_precip_mm, res_humidity, res_vis_km;
     let findLocation;
-    if(req.cookies.permission != 'true'){
-        res.status(403);
-        res.send('Permission denied');
-    }else{
+    //if(req.cookies.permission != 'true'){
+    //    res.status(403);
+    //    res.send('Permission denied');
+    //}else{
         await Location.findOne({name: locationName}).exec()
         .then((result) => {
             findLocation = result;
@@ -81,14 +81,16 @@ router.post('/location', async(req, res) => {
                 });
             }
         }
-    }
+    //}
 });
 
 router.get('/locations', async(req,res) => {
+    /*
     if(req.cookies.permission != 'true'){
         res.status(403);
         res.send('Permission denied');
     }else{
+        */
         let locationList, url;
         await Location.find().exec()
         .then((results) => {
@@ -122,14 +124,14 @@ router.get('/locations', async(req,res) => {
         }
             res.status(200);
             res.send(locationList);
-        }
+     //   }
 });
 
 router.get('/location', async(req,res) => {
-    if(req.cookies.permission != 'true'){
+    /*if(req.cookies.permission != 'true'){
         res.status(403);
         res.send('Permission denied');
-    }else{
+    }else{*/
         let url, result, result_lat, result_long;
         let exists = true;
         await Location.findOne({ name: req.query['name']}).exec()
@@ -173,14 +175,14 @@ router.get('/location', async(req,res) => {
                 res.status(200);
                 res.send(result);
             }
-        }
+     //   }
 });
 
 router.put('/location', async(req, res) => {
-    if(req.cookies.permission != 'true'){
-        res.status(403);
-        res.send('Permission denied');
-    }else{
+   // if(req.cookies.permission != 'true'){
+   //     res.status(403);
+   //     res.send('Permission denied');
+   // }else{
         await Location.findOne({name: req.body['new_locationName']}).exec()
         .then((result) => {
             findLocation = result;
@@ -207,14 +209,14 @@ router.put('/location', async(req, res) => {
                 }
             });
         }
-    }
+    //}
 });
 
 router.delete('/location', (req, res) => {
-    if(req.cookies.permission != 'true'){
-        res.status(403);
-        res.send('Permission denied');
-    }else{
+    //if(req.cookies.permission != 'true'){
+    //    res.status(403);
+    //    res.send('Permission denied');
+    //}else{
         Location.findOneAndDelete({name: req.body['locationName']}, (err, result) => {
             if(err){
                 res.status(401);
@@ -224,7 +226,7 @@ router.delete('/location', (req, res) => {
                 res.send('Deleted location successfully');
             }
         })
-    }
+    //}
 })
 
 module.exports = router;
