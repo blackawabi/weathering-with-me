@@ -86,25 +86,27 @@ function Location(){
 
             //google_images.searchRandom(data.country+" city view",true)
             //.then(result=>setBackground(result.image.url))
+            fetch("http://localhost:4000/getFavourite",{
+                credentials: 'include',
+            })
+            .then(res=>res.json())
+            .then(data2=>{
+                for(let x of data2){
+                    if(x==data.name){
+                        setHeartColor("error")
+                        break;
+                    }
+                    setHeartColor("default")
+                }
+
+            })
 
         })
-        //.catch(()=>navigate("/error"))
+
+    .catch(()=>navigate("/error"))
         
 
-        fetch("http://localhost:4000/getFavourite",{
-            credentials: 'include',
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            for(let x of data){
-                if(x==info.name){
-                    setHeartColor("error")
-                    break;
-                }
-                setHeartColor("default")
-            }
-
-        })
+        
     }
         document.addEventListener("scroll", textFade);      
     })
