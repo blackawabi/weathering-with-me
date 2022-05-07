@@ -10,9 +10,9 @@ mapboxgl.accessToken = 'pk.eyJ1IjoidmFuaG9ubm4iLCJhIjoiY2wyaG1oYXJtMGV6bjNkb2p1Z
 const list = [
     {country: "US", name: "Manhattan", lng: -74, lat: 40.7128, t:0, ws:0, wd:0, h:0, vis:0},
     {country: "UK" ,name: "London" , lng: -0.118092 , lat: 51.509865 , t: 12 , ws: 0 , wd: 0 , h: 0, vis: 0},
-    {country: "China", name: "Hongkong" , lng: 114.177216 , lat: 22.302711 , t: 0 , ws: 0 , wd: 0 , h: 0, vis: 0},
-    {country: "France", name: "Paris" , lng: 2.349014 , lat: 48.864716 , t: 0 , ws: 0 , wd: 0 , h: 0, vis: 0},
-    {country: "German", name: "Berlin" , lng: 	13.404954 , lat: 52.520008 , t: 0 , ws: 0 , wd: 0 , h: 0, vis: 0}
+    {country: "HK", name: "Hongkong" , lng: 114.177216 , lat: 22.302711 , t: 0 , ws: 0 , wd: 0 , h: 0, vis: 0},
+    {country: "FR", name: "Paris" , lng: 2.349014 , lat: 48.864716 , t: 0 , ws: 0 , wd: 0 , h: 0, vis: 0},
+    {country: "GM", name: "Berlin" , lng: 	13.404954 , lat: 52.520008 , t: 0 , ws: 0 , wd: 0 , h: 0, vis: 0}
 ];
 
 
