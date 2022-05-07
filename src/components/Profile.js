@@ -91,14 +91,17 @@ export default function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [info, setInfo]=useState([])
+  const [fetchFinish,setFetchFinish]=useState(false)
 
   useEffect(() => {
+    if(fetchFinish==false)
     fetch("http://localhost:4000/getFavourite",{
             credentials: 'include',
         })
     .then(res=>res.json())
     .then(data=>{
         setInfo(data)
+        setFetchFinish(true)
     })
   })
 
