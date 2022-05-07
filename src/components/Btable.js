@@ -5,8 +5,8 @@ import BootstrapTable from "react-bootstrap-table-next";
 import filterFactory,{textFilter} from "react-bootstrap-table2-filter";
 
 let form_body = {
-  username: 'tester01',
-  password: '1234',
+  username: 'testervan',
+  password: '111222',
   permission: 'true'
 };
 
@@ -21,15 +21,11 @@ function Btable() {
     getData();
   }, []);
   const getData = () => {
-    // axios("https://jsonplaceholder.typicode.com/comments").then((res)=>
-    //   {console.log(res.data);
-    //   setData(res.data);
-    //   //res.date.forEach(obj,ind=>obj.__id=ind)
-    //   }
-    // );
         fetch('http://119.246.79.200:8080/locations', {
-        method: 'POST',
-        body: new URLSearchParams(form_body),
+        //method: 'POST',
+        //body: new URLSearchParams(form_body),
+        method: 'GET',
+        credentials: 'include'
         })
         .then(res => res.json())
         .then(data => {
@@ -59,12 +55,22 @@ function Btable() {
   },
   {
     dataField:"long",
-    text:"Lat",
+    text:"Lng",
     sort:true,
   },
   {
     dataField:"temp_c",
     text:"Temperature",
+    sort:true,
+  },
+  {
+    dataField:"wind_kph",
+    text:"Wind Speed",
+    sort:true,
+  },
+  {
+    dataField:"wind_dir",
+    text:"Wind Direction",
     sort:true,
   }
   ]
