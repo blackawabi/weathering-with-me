@@ -6,6 +6,7 @@
 const port = 4000;
 // const cookieTimeOut = 1200000;
 
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -30,6 +31,7 @@ app.use(comment);
 app.use(location);
 app.use(login);
 app.use(user);
+app.use(express.static(path.join(__dirname, "../build")));
 app.use(express.static('public'));
 app.get('*', (req,res) =>{
     res.sendFile(path.join(__dirname, "../build/index.html"));
@@ -50,6 +52,10 @@ db.once('open', function () {
         setTimeout(() => {
             app.close();
         }, 3000);
+    });
+    
+    app.get('*', (req,res) =>{
+        res.sendFile(path.join(__dirname, "../build/index.html"));
     });
     
     // handle default
