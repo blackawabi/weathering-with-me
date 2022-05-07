@@ -39,7 +39,7 @@ function App() {
         }
         {auth!=0 &&
           <>
-          <Route path="/" element={<Wea />}/>
+          <Route path="/" element={<Markmap />}/>
           <Route path="/location/:code" element={<Location />}/>   
           <Route path="/profile" element={<StickyHeadTable />} />
             
