@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import mapboxgl from 'mapbox-gl';
+import Btable from './Btable';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidmFuaG9ubm4iLCJhIjoiY2wyaG1oYXJtMGV6bjNkb2p1ZDFtZ2JyNiJ9.GujAFNhl0AWRIMuXI2R1zA';
 
@@ -51,7 +52,10 @@ class Markmap extends React.Component{
     render(){
         return(
             <div>
-                <div ref={el => this.mapContainer =el} style={{width:'800px', height:'600px'}}></div>
+                <div ref={el => this.mapContainer =el} style={{width:'160vh', height:'500px'}}></div>
+            </div>
+            <div className="container">
+                <Btable />
             </div>
         );
     }
