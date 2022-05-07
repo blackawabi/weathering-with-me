@@ -7,7 +7,7 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import {useNavigate} from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
 
