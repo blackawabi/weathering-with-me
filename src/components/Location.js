@@ -79,35 +79,33 @@ function Location(){
     useEffect(()=>{
         if(info==null  || background==null){
 
-        fetch("http://localhost:4000/location?name="+code)
-        .then(res=>res.json())
-        .then(data=>{
-            setInfo(data)
-
-            //google_images.searchRandom(data.country+" city view",true)
-            //.then(result=>setBackground(result.image.url))
-            fetch("http://localhost:4000/getFavourite",{
-                credentials: 'include',
-            })
+            fetch("/location?name="+code)
             .then(res=>res.json())
-            .then(data2=>{
-                for(let x of data2){
-                    if(x==data.name){
-                        setHeartColor("error")
-                        break;
+            .then(data=>{
+                setInfo(data)
+
+                //google_images.searchRandom(data.country+" city view",true)
+                //.then(result=>setBackground(result.image.url))
+                fetch("/getFavourite",{
+                    //credentials: 'include',
+                })
+                .then(res=>res.json())
+                .then(data2=>{
+                    for(let x of data2){
+                        if(x==data.name){
+                            setHeartColor("error")
+                            break;
+                        }
+                        setHeartColor("default")
                     }
-                    setHeartColor("default")
-                }
+
+                })
 
             })
 
-        })
-
-    .catch(()=>navigate("/error"))
+            .catch(()=>navigate("/error"))
         
-
-        
-    }
+        }
         document.addEventListener("scroll", textFade);      
     })
  
@@ -115,25 +113,24 @@ function Location(){
         setComment(event.target.value)
     }
     const handleSend=()=>{
-        fetch('http://localhost:4000/addComment',{
+        fetch('/addComment',{
             method:"POST",
             body: new URLSearchParams({
                 "locationName":info.name,
                 "comment":comment
             }),
-            credentials: 'include',
         }).then(res=>{
             if(res.status==201){
                 setComment("")
-                fetch("http://localhost:4000/location?name="+code)
+                fetch("/location?name="+code)
                 .then(res=>res.json())
-                .then(data=>console.log(data))
+                .then(data=>setInfo(data))
             }
         })
     }
     const handleFavorite=(event)=>{
         
-        fetch('http://localhost:4000/updateFavourite',{
+        fetch('/updateFavourite',{
             method:"POST",
             body: new URLSearchParams({
                 "locationName":info.name,
@@ -337,7 +334,7 @@ function Location(){
                             </List>
                   
                             <FormControl fullWidth variant="outlined">
-                                <InputLabel>Your Comment</InputLabel>
+                                <InputLabel>Comment</InputLabel>
                                 <OutlinedInput
                                     value={comment}
                                     onChange={handleInputComment}

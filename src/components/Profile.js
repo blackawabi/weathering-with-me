@@ -95,8 +95,9 @@ export default function StickyHeadTable() {
 
   useEffect(() => {
     if(fetchFinish==false)
-    fetch("http://localhost:4000/getFavourite",{
-            credentials: 'include',
+    //fetch("http://localhost:4000/getFavourite",{
+    fetch("/getFavourite",{
+           // credentials: 'include',
         })
     .then(res=>res.json())
     .then(data=>{

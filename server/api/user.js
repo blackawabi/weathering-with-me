@@ -6,9 +6,7 @@ router.use(cors());
 const { User } = require("../model.js");
 
 router.post('/updateFavourite', (req, res) => {
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+
     if(req.cookies.username == undefined){
         res.status(401);
         res.send('Please login before adding favorite location!');
@@ -38,9 +36,7 @@ router.post('/updateFavourite', (req, res) => {
 });
 
 router.get('/getFavourite', (req, res) => {
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+   
     if(req.cookies.username == undefined){
         res.status(401);
         res.send('Please login first!');

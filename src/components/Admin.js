@@ -91,7 +91,7 @@ export default function Admin(){
         setPassword(event.target.value);
     }
     const submitCreateUser=()=>{
-        fetch("http://localhost:4000/account",{
+        fetch("/account",{
             method:"POST",
             body: new URLSearchParams({
                 "username":username,
@@ -118,7 +118,7 @@ export default function Admin(){
 
     }
     const submitDeleteUser=()=>{
-        fetch("http://localhost:4000/account",{
+        fetch("/account",{
             method:"DELETE",
             body: new URLSearchParams({
                 "username":username,
@@ -142,7 +142,7 @@ export default function Admin(){
         })
     }
     const submitEditUser=()=>{
-        fetch("http://localhost:4000/account",{
+        fetch("/account",{
             method:"PUT",
             body: new URLSearchParams({
                 "original_username":currentUsername,
@@ -168,7 +168,7 @@ export default function Admin(){
         })   
     }
     const submitCreateLocation=()=>{
-        fetch("http://localhost:4000/location",{
+        fetch("/location",{
             method:"POST",
             body: new URLSearchParams({
                 "name":locName,
@@ -194,7 +194,7 @@ export default function Admin(){
         })   
     }
     const submitEditLocation=()=>{
-        fetch("http://localhost:4000/location",{
+        fetch("/location",{
             method:"PUT",
             body: new URLSearchParams({
                 "original_locationName":currentLocName,
@@ -221,7 +221,7 @@ export default function Admin(){
         })   
     }
     const submitDeleteLocation=()=>{
-        fetch("http://localhost:4000/location",{
+        fetch("/location",{
             method:"DELETE",
             body: new URLSearchParams({
                 "locationName":locName,
@@ -286,13 +286,13 @@ export default function Admin(){
     ]
 
     function reload(){
-        fetch("http://localhost:4000/accounts")
+        fetch("/accounts")
         .then(res=>res.json())
         .then(data=>{
             console.log(data);
             setRows1(data)
         })
-        fetch("http://localhost:4000/locations")
+        fetch("/locations")
         .then(res=>res.json())
         .then(data=>{
             console.log(data);
@@ -302,7 +302,7 @@ export default function Admin(){
 
     React.useEffect(()=>{
         if(rows1.length==0){
-            fetch("http://localhost:4000/accounts")
+            fetch("/accounts")
             .then(res=>res.json())
             .then(data=>{
                 console.log(data);
@@ -310,7 +310,7 @@ export default function Admin(){
             })
         }
         if(rows2.length==0){
-            fetch("http://localhost:4000/locations")
+            fetch("/locations")
             .then(res=>res.json())
             .then(data=>{
                 console.log(data);

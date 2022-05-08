@@ -38,13 +38,13 @@ function Login(){
 
         }*/
 
-        fetch('http://localhost:4000/login', {
+        fetch('/login', {
             method: 'POST', 
             body: new URLSearchParams({
                 "username":username,
                 "password":password
             }),   
-            credentials: 'include',
+            //credentials: 'include',
         })
         .then(res=>res.text())
         .then(()=>{
