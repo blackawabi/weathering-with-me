@@ -15,8 +15,8 @@ function NavBar(){
     const {auth, setAuth}=useContext(AuthContext)
     const navigate = useNavigate();
     const logout=()=>{
-        fetch('http://localhost:4000/logout',{
-            credentials: 'include',
+        fetch('/logout',{
+            //credentials: 'include',
         })
         .then(res=>{
             setAuth(0)
@@ -48,15 +48,10 @@ function NavBar(){
                         <>
                             <li className="nav-item">
                                 
-                                <Link to="/" className="nav-link">
+                                <Link to="/profile" className="nav-link">
                                     {getCookie("username")}
                                 </Link>
                             </li>  
-                            <li className="nav-item">
-                                <Link to="profile" className="nav-link">
-                                    Favourite Location
-                                </Link>    
-                            </li>        
                             <li className="nav-item">
                                 <Link to="#" className="nav-link" onClick={logout}>
                                     Logout
