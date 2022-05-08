@@ -12,7 +12,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const app = express();
-const path = require('path')
 let account = require("./api/account.js");
 let comment = require("./api/comment.js");
 let location = require("./api/location.js");
