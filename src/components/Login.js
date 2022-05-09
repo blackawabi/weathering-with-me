@@ -1,7 +1,7 @@
 import React, { useState, useContext }  from 'react';
 import {useNavigate} from 'react-router-dom'
 import London from '../backgroundImage/London.png'
-import { Container,TextField, Box, Button } from '@mui/material';
+import { Container,TextField, Box, Button, Snackbar, Alert } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import KeyIcon from '@mui/icons-material/Key';
 import { AuthContext } from '../context/AuthContext';
@@ -13,6 +13,12 @@ function Login(){
     const [password, setPassword]=useState("");
     const [unHelperText,setUnHelperText]=useState(null);
     const [pwHelperText,setPwHelperText]=useState(null);
+    const [alertMessage,setAlertMessage]=React.useState("")
+    const [alertColor,setAlertColor]=React.useState("");
+    const [snackbarOpen, setSnackbarOpen]=React.useState(false)
+    const handleSnackbarClose=()=>{
+        setSnackbarOpen(false);
+    }
     const handleUsernameChange=(event)=>{
         setUsername(event.target.value)
         setUnHelperText(null)
@@ -46,13 +52,22 @@ function Login(){
             }),   
             //credentials: 'include',
         })
-        .then(res=>res.text())
-        .then(()=>{
-            if(username=="admin")
-                setAuth(-1)
-            else setAuth(1)
-            navigate("/")
-        })
+        .then(res=>res.text().then(text=>{
+            if(res.status==401){
+                setAlertColor("error")
+                setAlertMessage(text)
+                setSnackbarOpen(true)
+            }else if(res.status==500){
+                setAlertColor("error")
+                setAlertMessage(text)
+                setSnackbarOpen(true)
+            }else if(res.status==200){
+                if(username=="admin")
+                    setAuth(-1)
+                else setAuth(1)
+                navigate("/")
+            }
+        }))
         .catch((error) => {
             console.error('Error:', error);
         });
@@ -125,6 +140,11 @@ function Login(){
                         </Box>
                     </Box>   
                 </Container>
+                <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+                    <Alert onClose={handleSnackbarClose} severity={alertColor} sx={{ width: '100%' }}>
+                        {alertMessage}
+                    </Alert>
+                </Snackbar>
                 
             </div>
         </>
