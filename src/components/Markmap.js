@@ -22,8 +22,8 @@ class Markmap extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            lng: -74,
-            lat: 40.7128,
+            lng: 114.177216,
+            lat: 22.302711,
             zoom:10
         }
     }
