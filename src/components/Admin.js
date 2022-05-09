@@ -2,7 +2,6 @@ import London from '../backgroundImage/London.png'
 import { DataGrid } from '@mui/x-data-grid';
 import * as React from 'react';
 import { Container, Grid, Dialog, TextField, Button, DialogTitle, DialogContent, DialogActions, Snackbar, Alert} from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 
 
 
@@ -28,10 +27,6 @@ export default function Admin(){
     const [alertMessage,setAlertMessage]=React.useState("")
     const [alertColor,setAlertColor]=React.useState("");
     const [snackbarOpen, setSnackbarOpen]=React.useState(false)
-    const navigate = useNavigate();
-    const handleSnackbarOpen=()=>{
-        setSnackbarOpen(true);
-    }
     const handleOpenAddLoc=()=>{
         setOpenAddLoc(true);
     }
