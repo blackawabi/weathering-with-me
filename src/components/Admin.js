@@ -141,6 +141,16 @@ export default function Admin(){
             
         })
     }
+    const reloadWeather=()=>{
+        fetch("/locations")
+        .then(res=>{
+            if(res.status==200){
+                setAlertColor("success")
+                setAlertMessage("Weather reloaded")
+                setSnackbarOpen(true)
+            }
+        })
+    }
     const submitEditUser=()=>{
         fetch("/account",{
             method:"PUT",
@@ -462,6 +472,9 @@ export default function Admin(){
                             </Button>
                             <Button color="error" variant="contained"onClick={handleOpenDelLoc}>
                                 Delete Location
+                            </Button>
+                            <Button color="success" variant="contained"onClick={reloadWeather}>
+                                Reload Weather 
                             </Button>
                             <Dialog onClose={handleClose} open={openAddLoc}>
                                 <DialogTitle>Add Location</DialogTitle>
