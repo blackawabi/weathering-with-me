@@ -22,8 +22,6 @@ function Btable() {
   }, []);
   const getData = () => {
         fetch('http://localhost:4000/locations', {
-        //method: 'POST',
-        //body: new URLSearchParams(form_body),
         method: 'GET',
 
         })
@@ -71,6 +69,20 @@ function Btable() {
   {
     dataField:"wind_dir",
     text:"Wind Direction",
+  },
+  {
+    dataField:"humidity",
+    text:"Humidiity(%)",
+    sort:true,
+  },
+  {
+    dataField:"precip_mm",
+    text:"Precipitation(mm)",
+    sort:true,
+  },
+  {
+    dataField:"vis_km",
+    text:"Visibility(km)",
     sort:true,
   }
   ]
@@ -86,6 +98,7 @@ function Btable() {
         filter={filterFactory()}
         />
     </div>
+
   );
 }
 
