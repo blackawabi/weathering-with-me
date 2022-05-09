@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import mapboxgl from 'mapbox-gl';
+/* eslint import/no-webpack-loader-syntax: off */
+import mapboxgl from '!mapbox-gl';
 import Btable from './Btable';
-
+import {Link} from 'react-router-dom'
 mapboxgl.accessToken = 'pk.eyJ1IjoidmFuaG9ubm4iLCJhIjoiY2wyaG1oYXJtMGV6bjNkb2p1ZDFtZ2JyNiJ9.GujAFNhl0AWRIMuXI2R1zA';
 
 
@@ -36,7 +37,7 @@ class Markmap extends React.Component{
             zoom: this.state.zoom
         })
         
-        fetch('http://localhost:4000/locations',
+        fetch('/locations',
               {
                 method:'GET'
                })
@@ -46,7 +47,7 @@ class Markmap extends React.Component{
                 var marker = new mapboxgl.Marker()
                 .setLngLat([mark.long, mark.lat])
                 .setPopup(new mapboxgl.Popup({offset: 30})
-                .setHTML('<a href="http://localhost/location/' + mark.name + '">' + mark.name + '</a>')) // onclick here and jump to the location detail
+                .setHTML('<a href="/location/' + mark.name + '">' + mark.country + '</a>')) // onclick here and jump to the location detail
                 .addTo(map);
             });
         })

@@ -2,10 +2,11 @@
 import {useState, useEffect} from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import filterFactory,{textFilter} from "react-bootstrap-table2-filter";
+import { useNavigate } from "react-router-dom";
 
 
 function Btable() {
-
+  const navigate=useNavigate();
   const [data,setData] = useState([]);
   const [time,setTime] = useState(0);
 
@@ -15,7 +16,7 @@ function Btable() {
     getData();
   }, []);
   const getData = () => {
-        fetch('http://localhost:4000/locations', {
+        fetch('/locations', {
         method: 'GET',
 
         })
@@ -33,7 +34,7 @@ function Btable() {
     dataField:"name",
     text:"Name",
     sort:true,
-    filter: textFilter()
+    filter: textFilter(),    
   },
   {
     dataField:"country",
@@ -81,8 +82,13 @@ function Btable() {
     sort:true,
   }
   ]
+  const rowEvents={
+    onClick:(e,row,rowIndex)=>{
+      navigate("/location/"+row.name)
+    }
+  }
   return (
-    <div className="App">
+    <div className="App" style={{marginTop:"3px"}}>
       <BootstrapTable
         keyField="id"
         data={data} 
@@ -91,6 +97,7 @@ function Btable() {
         hover
         condensed
         filter={filterFactory()}
+        rowEvents={rowEvents}
         />
       <footer>
         <p style={{textAlign:"right", }}> Data Update Time: {time}</p>
