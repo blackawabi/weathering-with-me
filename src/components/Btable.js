@@ -1,19 +1,13 @@
 
-import axios from "axios";
 import {useState, useEffect} from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import filterFactory,{textFilter} from "react-bootstrap-table2-filter";
-
-let form_body = {
-  username: 'testervan',
-  password: '111222',
-  permission: 'true'
-};
 
 
 function Btable() {
 
   const [data,setData] = useState([]);
+  const [time,setTime] = useState(0);
 
   
 
@@ -29,6 +23,7 @@ function Btable() {
         .then(data => {
             console.log(data);
             setData(data);
+            setTime(data[0].time);
         })
         .catch();
   };
@@ -97,6 +92,9 @@ function Btable() {
         condensed
         filter={filterFactory()}
         />
+      <footer>
+        <p style={{textAlign:"right", }}> Data Update Time: {time}</p>
+      </footer>
     </div>
 
   );
