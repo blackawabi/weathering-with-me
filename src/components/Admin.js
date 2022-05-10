@@ -3,9 +3,6 @@ import { DataGrid } from '@mui/x-data-grid';
 import * as React from 'react';
 import { Container, Grid, Dialog, TextField, Button, DialogTitle, DialogContent, DialogActions, Snackbar, Alert} from '@mui/material';
 
-
-
-
 export default function Admin(){
     const [fetchComplete, setFetchComplete]=React.useState(false)
     const [rows1,setRows1]=React.useState([]);
@@ -341,12 +338,12 @@ export default function Admin(){
                             <h1 class="display-1 text-center text-white" style={{userSelect: "none"}}>
                                 User
                             </h1>
-                            <div style={{ height: 300, width: '100%', backgroundColor:"white"}}>
+                            <div style={{ height: 450, width: '100%', backgroundColor:"white"}}>
                                 <DataGrid
                                     rows={rows1}
                                     columns={columns1}
-                                    pageSize={5}
-                                    rowsPerPageOptions={[5]}
+                                    pageSize={6}
+                                    rowsPerPageOptions={[6]}
                                     getRowId={(row) => row._id}
                                     
                                 />
@@ -449,12 +446,12 @@ export default function Admin(){
                             <h1 class="display-1 text-center text-white" style={{userSelect: "none"}}>
                                 Location
                             </h1>
-                            <div style={{ height: 300, width: '100%', backgroundColor:"white"}}>
+                            <div style={{ height: 450, width: '100%', backgroundColor:"white"}}>
                                 <DataGrid
                                     rows={rows2}
                                     columns={columns2}
-                                    pageSize={5}
-                                    rowsPerPageOptions={[5]}
+                                    pageSize={6}
+                                    rowsPerPageOptions={[6]}
                                     getRowId={(row) => row._id}
     
                                 />
