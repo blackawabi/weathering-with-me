@@ -18,7 +18,7 @@ import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { faWind } from '@fortawesome/free-solid-svg-icons';
 import SendIcon from '@mui/icons-material/Send';
 import { InputAdornment } from '@mui/material';
-import google_images from "free-google-images"
+import image_finder from "image-search-engine";
 
 /* eslint import/no-webpack-loader-syntax: off */
 import mapboxgl from '!mapbox-gl';
@@ -75,36 +75,38 @@ function Location(){
     const [comment,setComment]=useState("")
     const [heartColor, setHeartColor]=useState()
     const [info, setInfo]=useState()
-    const [background,setBackground]=useState("a")
+    const [background,setBackground]=useState()
     useEffect(()=>{
-        if(info==null  || background==null){
-
-            fetch("/location?name="+code)
-            .then(res=>res.json())
-            .then(data=>{
-                setInfo(data)
-
-                //google_images.searchRandom(data.country+" city view",true)
-                //.then(result=>setBackground(result.image.url))
-                fetch("/getFavourite",{
-                    //credentials: 'include',
-                })
+        if(info==null  || background==null||heartColor==null){
+            if(info==null){
+                fetch("/location?name="+code)
                 .then(res=>res.json())
-                .then(data2=>{
-                    for(let x of data2){
-                        if(x==data.name){
-                            setHeartColor("error")
-                            break;
+                .then(data=>setInfo(data))
+                .catch(()=>navigate("/error"))
+            }
+            if(info!=null){
+                if(background==null){
+                    fetch("/background?country="+info.country)
+                    .then(res=>res.text())
+                    .then(bg=>setBackground(bg))
+                    .catch(()=>navigate("/error"))
+                }
+                if(heartColor==null){
+                    fetch("/getFavourite")
+                    .then(res=>res.json())
+                    .then(data=>{
+                        for(let x of data){
+                            if(x==info.name){
+                                setHeartColor("error")
+                                break;
+                            }
+                            setHeartColor("default")
                         }
-                        setHeartColor("default")
-                    }
-
-                })
-
-            })
-
-            .catch(()=>navigate("/error"))
-        
+                    })
+                    .catch(()=>navigate("/error"))
+                }
+            }
+            
         }
         document.addEventListener("scroll", textFade);      
     })
@@ -154,7 +156,7 @@ function Location(){
         event.preventDefault();
     }
 
-    if(info==null || background==null){
+    if(info==null || background==null||heartColor==null){
         return<>wait</>
     }else return(
         <>
@@ -175,7 +177,7 @@ function Location(){
             <div style={{
                 height: "auto",
                 width: "100%",
-                backgroundImage: `linear-gradient(rgba(182, 187, 205, 0.7), rgba(4,9,30,0.7)), url(${London})`,  
+                backgroundImage: `linear-gradient(rgba(182, 187, 205, 0.7), rgba(4,9,30,0.7)), url(${background})`,  
                 backgroundPosition: "center",
                 backgroundSize: "cover",
                 backgroundAttachment: "fixed"
