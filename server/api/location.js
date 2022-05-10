@@ -12,11 +12,25 @@ const weatherAPI_key = '1d4b5bca7db7453cb6d121603222704';
 const weatherAPI_url = 'https://api.weatherapi.com/v1/current.json?key=' + weatherAPI_key;
 
 router.get("/background",async(req,res)=>{
-    
-    google_images.search(req.query["country"]+"city view",true)
+    let date=new Date();
+    let query;
+    /*
+    if (date.getHours()>=4 && date.getHours()<11)
+        query=req.query["country"]+" city view morning"
+    else if(date.getHours()>=11 && date.getHours()<18)
+        query=req.query["country"]+" city view noon"
+    else query=req.query["country"]+" city view night"*/
+    query=req.query["country"]+" city view"
+    google_images.search(query,true)
     .then(result => {
-        res.send(result[0].image.url)
-        console.log(result[0].image.url)
+            for(let i=0;i<result.length;i++){
+                if(result[i].image.size.width>=1280){
+                    res.send(result[i].image.url)
+                    console.log(result[i].image.url)
+                    break;
+                }
+                
+            }        
     }).catch(err=>console.log(err))
 })
 
