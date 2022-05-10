@@ -8,12 +8,15 @@ import { useNavigate } from "react-router-dom";
 function Btable() {
   const navigate=useNavigate();
   const [data,setData] = useState([]);
-  const [time,setTime] = useState(0);
+  const [time,setTime] = useState();
 
   
 
   useEffect(() => {
-    getData();
+    if (time==null){
+      getData();
+    }
+    
   }, []);
   const getData = () => {
         fetch('/locations', {
