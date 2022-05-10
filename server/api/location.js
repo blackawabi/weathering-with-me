@@ -3,12 +3,22 @@ const cors = require("cors");
 let router = express.Router();
 router.use(cors());
 const fetch = require('node-fetch')
-
+const google_images = require("free-google-images");
 
 const { Location } = require("../model.js");
+const { RouteTwoTone } = require('@mui/icons-material');
 
 const weatherAPI_key = '1d4b5bca7db7453cb6d121603222704';
 const weatherAPI_url = 'https://api.weatherapi.com/v1/current.json?key=' + weatherAPI_key;
+
+router.get("/background",async(req,res)=>{
+    
+    google_images.search(req.query["country"]+"city view",true)
+    .then(result => {
+        res.send(result[0].image.url)
+        console.log(result[0].image.url)
+    }).catch(err=>console.log(err))
+})
 
 router.post('/location', async(req, res) => {
     let locationName = req.body['name'];
