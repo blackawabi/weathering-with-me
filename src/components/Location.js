@@ -232,7 +232,7 @@ function Location(){
                                     {info.vis_km}km
                                 </span>
                             </p>
-                            <p className="update text-left text-white">
+                            <p className="update text-left text-white" style={{userSelect: "none"}}>
                                 Updated at: {info.updatedAt.toString().replace("T"," ").slice(0,19)}
                             </p>
                         </Box>
