@@ -5,7 +5,7 @@ import filterFactory,{textFilter} from "react-bootstrap-table2-filter";
 import { useNavigate } from "react-router-dom";
 
 
-function Btable() {
+function Btable(props) {
   const navigate=useNavigate();
   const [data,setData] = useState([]);
   const [time,setTime] = useState();
@@ -19,17 +19,10 @@ function Btable() {
     
   }, []);
   const getData = () => {
-        fetch('/locations', {
-        method: 'GET',
-
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            setData(data);
-            setTime(data[0].time);
-        })
-        .catch();
+        
+    setData(props.info);
+    setTime(props.info[0].time);
+     
   };
 
   const columns=[

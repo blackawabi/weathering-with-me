@@ -25,7 +25,8 @@ class Markmap extends React.Component{
         this.state = {
             lng: 114.177216,
             lat: 22.302711,
-            zoom:10
+            zoom:10,
+            info:null
         }
     }
 
@@ -37,19 +38,19 @@ class Markmap extends React.Component{
             zoom: this.state.zoom
         })
         
-        fetch('/locations',
-              {
-                method:'GET'
-               })
+        fetch('/locations')
         .then(res => res.json())
         .then(data => {
+            this.setState({info:data})
             data.forEach((mark)=>{
                 var marker = new mapboxgl.Marker()
                 .setLngLat([mark.long, mark.lat])
                 .setPopup(new mapboxgl.Popup({offset: 30})
                 .setHTML('<a href="/location/' + mark.name + '">' + mark.country + '</a>')) // onclick here and jump to the location detail
                 .addTo(map);
-            });
+            }
+            
+            );
         })
         .catch();
          
@@ -62,9 +63,16 @@ class Markmap extends React.Component{
                 <div>
                     <div ref={el => this.mapContainer =el} style={{width:'100%', height:'500px'}}></div>
                 </div>
-                <div className="container">
-                    <Btable />
-                </div>
+                {this.state.info!=null?
+                    <div className="container">
+                        <Btable info={this.state.info}/>
+                    </div>
+                    :
+                    <div>
+
+                    </div>
+
+                }
             </>
             
         );
