@@ -61,7 +61,7 @@ class Markmap extends React.Component{
             <>
             
                 <div>
-                    <div ref={el => this.mapContainer =el} style={{width:'100%', height:'500px'}}></div>
+                    <div ref={el => this.mapContainer =el} style={{width:'100%', height:'100vh'}}></div>
                 </div>
                 {this.state.info!=null?
                     <div className="container">
