@@ -25,6 +25,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoicGF1Y3cwOTI1IiwiYSI6ImNsMjlvdXFvMTBsZHQzZW8wc
 var textFade = function(){
     const weatherInfo = document.getElementById("weather-info");
     const weatherInfo2 = document.getElementsByClassName("weather-display")
+    const weatherInfo3 = document.getElementsByClassName("update")
 
     const map0=document.getElementById("map0");
     const map1=document.getElementById("map1");
@@ -35,6 +36,7 @@ var textFade = function(){
     weatherInfo2[1].style.opacity=1-(window.scrollY*3/window.innerHeight);
     weatherInfo2[2].style.opacity=1-(window.scrollY*3/window.innerHeight);
     weatherInfo2[3].style.opacity=1-(window.scrollY*3/window.innerHeight);
+    weatherInfo3[0].style.opacity=1-(window.scrollY*3/window.innerHeight);
     
     map0.style.opacity=-0.1+(window.scrollY/window.innerHeight);
     map1.style.opacity=-0.2+(window.scrollY/window.innerHeight);
@@ -230,8 +232,8 @@ function Location(){
                                     {info.vis_km}km
                                 </span>
                             </p>
-                            <p className="weather-display text-left text-white">
-                                Updated at: {info.updatedAt}
+                            <p className="update text-left text-white">
+                                Updated at: {info.updatedAt.toString().replace("T"," ").slice(0,19)}
                             </p>
                         </Box>
                         
