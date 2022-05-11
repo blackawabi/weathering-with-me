@@ -156,7 +156,7 @@ function Location(){
         event.preventDefault();
     }
 
-    if(info==null || background==null||heartColor==null){
+    if(info==null || background==null){
         return<>wait</>
     }else return(
         <>
