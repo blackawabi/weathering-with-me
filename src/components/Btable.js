@@ -20,10 +20,8 @@ function Btable(props) {
     
   }, []);
   const getData = () => {
-        
     setData(props.info);
-    setTime(props.info[0].time);
-     
+    setTime(props.info[0].time.toString().replace("T"," ").slice(0,19));
   };
 
   const columns=[
@@ -31,7 +29,7 @@ function Btable(props) {
     dataField:"name",
     text:"Name",
     sort:true,
-    filter: textFilter(),   
+    filter: textFilter(),      
     headerStyle:{
       backgroundColor:"white"
     } 
@@ -114,9 +112,13 @@ function Btable(props) {
       navigate("/location/"+row.name)
     }
   }
-
+  let width=window.innerWidth>1024?4:2
   return (
-    <div className="App" style={{margin:"0 0 2px 0",position:"fixed", bottom:"0", left:"5vh", right:"5vh"}}>
+    <>
+    <div className="App weather-table">
+      <div className="text-right">
+        Update Time: {time}
+      </div>
       <BootstrapTable
         keyField="id"
         data={data} 
@@ -132,17 +134,19 @@ function Btable(props) {
             withFirstAndLast: true,
             alwaysShowAllBtns: true,
             sizePerPageList: [{
-              text: '5', value: 5
+              text: '5', value: width
             }],
             hideSizePerPage: true,
           }) 
         }
         rowStyle={ { backgroundColor: 'white' } }
-        />
-      <footer>
-        <p style={{textAlign:"right", }}> Data Update Time: {time}</p>
-      </footer>
+      />
+  
     </div>
+
+    
+    
+  </>
 
   );
 }
