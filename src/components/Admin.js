@@ -1,10 +1,10 @@
 import London from '../backgroundImage/London.png'
 import { DataGrid } from '@mui/x-data-grid';
 import * as React from 'react';
-import { Container, Grid, Dialog, TextField, Button, DialogTitle, DialogContent, DialogActions, Snackbar, Alert} from '@mui/material';
+import { Container, Grid, Dialog, TextField, Button, DialogTitle, 
+    DialogContent, DialogActions, Snackbar, Alert, CircularProgress} from '@mui/material';
 
 export default function Admin(){
-    const [fetchComplete, setFetchComplete]=React.useState(false)
     const [rows1,setRows1]=React.useState([]);
     const [rows2,setRows2]=React.useState([]);
     const [locName,setLocName]=React.useState("");
@@ -303,22 +303,22 @@ export default function Admin(){
     }
 
     React.useEffect(()=>{
-        if(rows1.length==0){
+        let data1,data2
+        if(rows1.length==0 && rows2.length==0)
+        Promise.all([
             fetch("/accounts")
             .then(res=>res.json())
             .then(data=>{
                 console.log(data);
-                setRows1(data)
-            })
-        }
-        if(rows2.length==0){
+                data1=data
+            }),
             fetch("/locations")
             .then(res=>res.json())
             .then(data=>{
                 console.log(data);
-                setRows2(data)
+                data2=data
             })
-        }
+        ]).then(()=>{setRows1(data1);setRows2(data2)});
         
     })
     return(
@@ -582,7 +582,20 @@ export default function Admin(){
                         {alertMessage}
                     </Alert>
                 </Snackbar>
-                
+                {rows1.length==0 || rows2.length==0?
+                <CircularProgress sx={{
+                        right:{
+                            xs:20,
+                            md:40
+                        }, 
+                        bottom:{
+                            xs:20,
+                            md:40
+                        }, 
+                        position:"fixed"
+                }}/>:
+                <></>
+                }
                 
                 
             </div>

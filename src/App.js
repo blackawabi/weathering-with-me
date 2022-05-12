@@ -42,13 +42,13 @@ function App() {
           <Route path="/" element={<Markmap />}/>
           <Route path="/location/:code" element={<Location />}/>   
           <Route path="/profile" element={<StickyHeadTable />} />
-          <Route path="error" element={<NotFound/>}/>  
+   
+            <Route path="/admin" element={<Admin />} />
+          
+          <Route path="error" element={<NotFound/>}/> 
           </>
         }
-        {
-          auth==-1 &&
-          <Route path="/admin" element={<Admin />} />
-        }
+
           <Route path="*" element={auth==0?<Navigate to="/login"/>:<Navigate to="error"/>}/>
       </Routes>
     </AuthContext.Provider>
