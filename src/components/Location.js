@@ -19,6 +19,7 @@ import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { faWind } from '@fortawesome/free-solid-svg-icons';
 import SendIcon from '@mui/icons-material/Send';
 import { InputAdornment } from '@mui/material';
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 /* eslint import/no-webpack-loader-syntax: off */
 import mapboxgl from '!mapbox-gl';
 mapboxgl.accessToken = 'pk.eyJ1IjoicGF1Y3cwOTI1IiwiYSI6ImNsMjlvdXFvMTBsZHQzZW8wcjllOWExdXIifQ._ITgimxUOGgbCE1oi4U8MQ';
@@ -77,6 +78,7 @@ function Location(){
     const [heartColor, setHeartColor]=useState()
     const [info, setInfo]=useState()
     const [background,setBackground]=useState()
+    const scrollRef = useRef(null);
     useEffect(()=>{
         if(info==null  || background==null||heartColor==null){
             if(info==null){
@@ -130,6 +132,16 @@ function Location(){
                 .then(data=>setInfo(data))
             }
         })
+        setTimeout(() => {
+            if (scrollRef.current) {
+                scrollRef.current.scrollIntoView({ behaviour: "smooth" });
+            }
+        }, 1000)
+    }
+    const gotobottom=()=>{
+        if (scrollRef.current) {
+            scrollRef.current.scrollIntoView({ behaviour: "smooth" });
+        }
     }
     const handleFavorite=(event)=>{
         
@@ -359,6 +371,7 @@ function Location(){
                                         </ListItemText>
                                     </ListItem>
                                 ))}
+                                <li ref={scrollRef} />
                             </List>
                   
                             <FormControl fullWidth variant="outlined">
@@ -374,6 +387,11 @@ function Location(){
                                             edge="end"
                                         >
                                             <SendIcon/>
+                                        </IconButton>
+                                         <IconButton
+                                            onClick={gotobottom}
+                                        >
+                                            <KeyboardDoubleArrowDownIcon/>
                                         </IconButton>
                                     </InputAdornment>
                                     }
