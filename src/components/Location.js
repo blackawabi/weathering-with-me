@@ -200,7 +200,7 @@ function Location(){
             <div style={{
                 height: "auto",
                 width: "100%",
-                backgroundImage: `url(${background})`,  
+                backgroundImage: `linear-gradient(rgba(182, 187, 205, 0.49), rgba(4,9,30,0.7)), url(${background})`,   
                 backgroundPosition: "center",
                 backgroundSize: "cover",
                 backgroundAttachment: "fixed"
