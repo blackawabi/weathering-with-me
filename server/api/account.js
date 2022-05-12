@@ -1,5 +1,5 @@
 const { User } = require("../model.js");
-
+const p4ssw0rd = require("p4ssw0rd")
 const express = require('express');
 const router = express.Router();
 const cors = require("cors");
@@ -12,10 +12,11 @@ router.post('/account', (req, res) => {
     if(req.body['permission'] == 'true'){
         permission = true;
     }
+    const hashedPassword=p4ssw0rd.hash(req.body['password'],{cost:10})
     
     User.create({
         username: req.body['username'],
-        password: req.body['password'],
+        password: hashedPassword,
         permission: permission,
         favorite: []
     }, (err, result) => {
