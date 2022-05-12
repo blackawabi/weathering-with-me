@@ -11,6 +11,7 @@ import Admin from './components/Admin';
 import London from './backgroundImage/London.png' 
 import { AuthContext } from './context/AuthContext';
 import Markmap from './components/Markmap';
+import NotFoundPage from './components/NotFoundPage';
 //ref
 function getCookie(name) {
   const value = `; ${document.cookie}`;
@@ -49,7 +50,7 @@ function App() {
           </>
         }
 
-          <Route path="*" element={auth==0?<Navigate to="/login"/>:<Navigate to="error"/>}/>
+          <Route path="*" element={auth==0?<Navigate to="/login"/>:<NotFoundPage />}/>
       </Routes>
     </AuthContext.Provider>
     
