@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 /* eslint import/no-webpack-loader-syntax: off */
 import mapboxgl from '!mapbox-gl';
 import Btable from './Btable';
-import {Link} from 'react-router-dom'
+import {CircularProgress} from '@mui/material';
 mapboxgl.accessToken = 'pk.eyJ1IjoidmFuaG9ubm4iLCJhIjoiY2wyaG1oYXJtMGV6bjNkb2p1ZDFtZ2JyNiJ9.GujAFNhl0AWRIMuXI2R1zA';
 
 
@@ -67,11 +67,18 @@ class Markmap extends React.Component{
                     <div className="container">
                         <Btable info={this.state.info}/>
                     </div>
-                    :
-                    <div>
-
-                    </div>
-
+                :
+                    <CircularProgress sx={{
+                        right:{
+                            xs:20,
+                            md:40
+                        }, 
+                        bottom:{
+                            xs:20,
+                            md:40
+                        }, 
+                        position:"fixed"
+                    }}/>
                 }
             </>
             

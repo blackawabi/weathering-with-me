@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef }  from 'react';
 import {useNavigate, useParams} from 'react-router-dom'
 import London from '../backgroundImage/London.png'
-import { Grid,Paper,Container, Box, Fab, List, ListItem, ListItemText, FormControl, InputLabel, OutlinedInput,IconButton, TextField } from '@mui/material';
+import { Grid,Paper,Container, CircularProgress,Box, Fab, List, ListItem, ListItemText, 
+    FormControl, InputLabel, OutlinedInput,IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import NorthIcon from '@mui/icons-material/North';
 import NorthEastIcon from '@mui/icons-material/NorthEast';
@@ -157,7 +158,29 @@ function Location(){
     }
 
     if(info==null || background==null){
-        return<>wait</>
+        return(
+            <>
+                <div style={{
+                    height:"100vh",
+                    width:"100%",
+                    backgroundColor:"#75CFF0",
+                    backgroundSize: "cover",
+                    backgroundAttachment: "fixed"
+                }}>
+                    <CircularProgress sx={{
+                        right:{
+                            xs:20,
+                            md:40
+                        }, 
+                        bottom:{
+                            xs:20,
+                            md:40
+                        }, 
+                        position:"fixed"
+                    }}/>
+                </div>
+            </>
+        )
     }else return(
         <>
             <Fab color={heartColor} 
