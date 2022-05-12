@@ -97,7 +97,7 @@ export default function Admin(){
                     setAlertColor("error")
                     setAlertMessage(text)
                     setSnackbarOpen(true)
-                }else if(res.status=201){
+                }else if(res.status==201){
                     handleClose()
                     setAlertColor("success")
                     setAlertMessage(text)
