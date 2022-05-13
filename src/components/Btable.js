@@ -22,7 +22,7 @@ function Btable(props) {
   const getData = () => {
     setData(props.info);
     let newDate = new Date(Date.now())
-    setTime(`${newDate.getDate()}/${newDate.getMonth()+1} ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`);
+    setTime(`${newDate.getDate()}/${newDate.getMonth()+1} ${("0"+newDate.getHours()).slice(-2)}:${("0"+newDate.getMinutes()).slice(-2)}:${("0"+newDate.getSeconds()).slice(-2)}`);
   };
 
   const columns=[
