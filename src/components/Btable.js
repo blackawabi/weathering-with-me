@@ -21,7 +21,8 @@ function Btable(props) {
   }, []);
   const getData = () => {
     setData(props.info);
-    setTime(props.info[0].time.toString().replace("T"," ").slice(0,19));
+    let newDate = new Date(Date.now())
+    setTime(`${newDate.getDate()}/${newDate.getMonth()+1} ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`);
   };
 
   const columns=[
@@ -117,7 +118,7 @@ function Btable(props) {
     <>
     <div className="App weather-table">
       <div className="text-right">
-        Update Time: {time}
+        Latest weather before: {time}
       </div>
       <BootstrapTable
         keyField="id"

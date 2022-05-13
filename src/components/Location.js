@@ -75,6 +75,7 @@ function Location(){
     let navigate=useNavigate();
     let {code}=useParams();
     const [comment,setComment]=useState("")
+    const [newDate, setNewDate]=useState()
     const [heartColor, setHeartColor]=useState()
     const [info, setInfo]=useState()
     const [background,setBackground]=useState()
@@ -84,10 +85,17 @@ function Location(){
             if(info==null){
                 fetch("/location?name="+code)
                 .then(res=>res.json())
-                .then(data=>setInfo(data))
+                .then(data=>{
+                    setInfo(data)
+                })
                 .catch(()=>navigate("/error"))
             }
             if(info!=null){
+                if(newDate==null){
+                    let d=new Date(info.updatedAt)
+                    setNewDate(d)
+                }
+                
                 if(background==null){
                     fetch("/background?country="+info.country)
                     .then(res=>res.text())
@@ -168,7 +176,6 @@ function Location(){
     const handleMouseDown=(event)=>{
         event.preventDefault();
     }
-
     if(info==null || background==null){
         return(
             <>
@@ -268,7 +275,7 @@ function Location(){
                                 </span>
                             </p>
                             <p className="update text-left text-white" style={{userSelect: "none"}}>
-                                Updated at: {info.updatedAt.toString().replace("T"," ").slice(0,19)}
+                                Updated at: {newDate.getDate()}/{newDate.getMonth()+1} {newDate.getHours()}:{newDate.getMinutes()}:${newDate.getSeconds()}
                             </p>
                         </Box>
                         
