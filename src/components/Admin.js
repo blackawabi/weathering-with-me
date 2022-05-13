@@ -83,29 +83,36 @@ export default function Admin(){
         setPassword(event.target.value);
     }
     const submitCreateUser=()=>{
-        fetch("/account",{
-            method:"POST",
-            body: new URLSearchParams({
-                "username":username,
-                "password":password
-            }),
-        })   
-        .then(res=>{
-            res.text()
-            .then(text=>{
-                if(res.status==401){
-                    setAlertColor("error")
-                    setAlertMessage(text)
-                    setSnackbarOpen(true)
-                }else if(res.status==201){
-                    handleClose()
-                    setAlertColor("success")
-                    setAlertMessage(text)
-                    setSnackbarOpen(true)
-                    reload()
-                }
+        if(username.length>=4 && username.length<=20 && password.length>=4 && password.length<=20){
+            fetch("/account",{
+                method:"POST",
+                body: new URLSearchParams({
+                    "username":username,
+                    "password":password
+                }),
+            })   
+            .then(res=>{
+                res.text()
+                .then(text=>{
+                    if(res.status==401){
+                        setAlertColor("error")
+                        setAlertMessage(text)
+                        setSnackbarOpen(true)
+                    }else if(res.status==201){
+                        handleClose()
+                        setAlertColor("success")
+                        setAlertMessage(text)
+                        setSnackbarOpen(true)
+                        reload()
+                    }
+                })
             })
-        })
+        }else{
+            setAlertColor("error")
+            setAlertMessage("Username and Password must be in length of 4-20")
+            setSnackbarOpen(true)
+        }
+        
 
 
     }
