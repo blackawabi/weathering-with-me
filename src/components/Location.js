@@ -295,8 +295,9 @@ function Location(){
                             }
                         }} id="weather-info" >
                             <h1 className="display-1 text-right text-white" style={{userSelect: "none"}}>
-                                {info.country=="United Kingdom"?
-                                    "U.K.":info.country
+                                {
+                                    info.country=="United Kingdom"?"U.K.":
+                                    info.country=="United States of America"?"U.S.A.":info.country    
                                 }
 
                             </h1>
