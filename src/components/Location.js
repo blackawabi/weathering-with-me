@@ -275,7 +275,7 @@ function Location(){
                                 </span>
                             </p>
                             <p className="update text-left text-white" style={{userSelect: "none"}}>
-                                Updated at: {newDate.getDate()}/{newDate.getMonth()+1} {newDate.getHours()}:{newDate.getMinutes()}:${newDate.getSeconds()}
+                                Updated at: {newDate.getDate()}/{newDate.getMonth()+1} {newDate.getHours()}:{newDate.getMinutes()}:{newDate.getSeconds()}
                             </p>
                         </Box>
                         
