@@ -16,6 +16,9 @@ router.post('/login', (req, res) => {
         if(err){
             res.status(500);
             res.send('Server error occurred');
+        }else if(result == null){
+            res.status(401);
+            res.send('Invalid username or password');
         }else if(p4ssw0rd.check(req.body["password"],result.password,{cost:10})){
             res.cookie('username', result.username, { maxAge: cookieTimeOut});
             res.cookie('password', result.password, { maxAge: cookieTimeOut});
