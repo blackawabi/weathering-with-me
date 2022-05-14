@@ -17,10 +17,10 @@ import NotFoundPage from './components/NotFoundPage';
 
 // Code adapted from kirlich on stackoverflow:
 // https://stackoverflow.com/questions/10730362/get-cookie-by-name
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
+function getCookie(key) {
+  let value = ('; '+ document.cookie).split('; '+key+'=');
+  if (value.length === 2) 
+    return value.pop().split(';').shift();
 }
 
 function App() {

@@ -1,10 +1,14 @@
-@charset "UTF-8";
-
 /*
 1155125519 Hon Wing Ngai	1155143564 Chiu Chak San	1155126052 Kong Ho Pak 
 1155136412 Pau Chun Wai	    1155143814 Lam Tsz Hoi	
 */
 
+/*
+  Code below is adapted from startBootstrap:
+  https://startbootstrap.com/theme/creative
+*/
+
+@charset "UTF-8";
 
 .weather-table{
   overflow-X:auto;
@@ -62,10 +66,6 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
-/*
-  Code below is adapted from startBootstrap:
-  https://startbootstrap.com/theme/creative
-*/
 
 .text-right {
   text-align: right;
