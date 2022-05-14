@@ -1,6 +1,5 @@
 import React, { useState, useContext }  from 'react';
 import {useNavigate} from 'react-router-dom'
-import London from '../backgroundImage/London.png'
 import { Container,TextField, Box, Button, Snackbar, Alert } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import KeyIcon from '@mui/icons-material/Key';
@@ -78,18 +77,18 @@ function Login(){
     return(
         <>
             <div style={{
-                height: "100vh",
-                width: "100%",
-                backgroundImage: `linear-gradient(rgba(182, 187, 205, 0.7), rgba(4,9,30,0.7)), url(${London})`,  
-                backgroundPosition: "center",
+                height:"100vh",
+                width:"100%",
+                backgroundColor:"#75CFF0",
                 backgroundSize: "cover",
-                position: "fixed",
+                backgroundAttachment: "fixed",
+                paddingTop:"22vh"
             }}>
                 <Container maxWidth="sm" 
                     sx={{
                         backgroundColor:"white",textAlign:"center"
                     }} 
-                        className="border border-light border-4 balance"
+                        className="border border-light border-4"
                 >
                     <Box sx={{
                         margin:{

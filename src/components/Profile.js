@@ -9,7 +9,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
-import London from '../backgroundImage/London.png'
 import { Container, Box } from '@mui/material';
 
 const Stylecell = styled(TableCell)(({ theme }) => ({
@@ -67,12 +66,12 @@ export default function Profile() {
 
   return (
     <div style={{
-        height: "100vh",
-        width: "100%",
-        backgroundImage: `linear-gradient(rgba(182, 187, 205, 0.7), rgba(4,9,30,0.7)), url(${London})`,  
-        backgroundPosition: "center",
+        height:"100vh",
+        width:"100%",
+        backgroundColor:"#75CFF0",
         backgroundSize: "cover",
-        position: "fixed",
+        backgroundAttachment: "fixed",
+        paddingTop:"22vh"
     }}>
     
         <Container maxWidth='lg'
@@ -80,7 +79,7 @@ export default function Profile() {
         sx={{
             backgroundColor:"white",textAlign:"center"
         }} 
-        className="border border-light border-4 balance"
+        className="border border-light border-4"
         >
             <Box sx={{
             margin:{

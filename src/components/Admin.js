@@ -1,4 +1,3 @@
-import London from '../backgroundImage/London.png'
 import { DataGrid } from '@mui/x-data-grid';
 import * as React from 'react';
 import { Container, Grid, Dialog, TextField, Button, DialogTitle, 
@@ -331,12 +330,12 @@ export default function Admin(){
     return(
         <>
             <div style={{
-                height: "100vh",
-                width: "100%",
-                backgroundImage: `linear-gradient(rgba(182, 187, 205, 0.7), rgba(4,9,30,0.7)), url(${London})`,  
-                backgroundPosition: "center",
+                height:"100vh",
+                width:"100%",
+                backgroundColor:"#75CFF0",
                 backgroundSize: "cover",
-                backgroundAttachment: "fixed"
+                backgroundAttachment: "fixed",
+                paddingTop:"22vh"
             }}> 
             
                 <Container maxWidth="lg" style={{padding:"6em 0em 2em 0em",}}>

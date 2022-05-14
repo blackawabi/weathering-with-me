@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef }  from 'react';
 import {useNavigate, useParams} from 'react-router-dom'
-import London from '../backgroundImage/London.png'
 import { Grid,Paper,Container, CircularProgress,Box, Fab, List, ListItem, ListItemText, 
     FormControl, InputLabel, OutlinedInput,IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';

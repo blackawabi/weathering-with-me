@@ -1,16 +1,17 @@
-import { Routes, Route, useNavigate,Navigate,useParams} from "react-router-dom";
+import { Routes, Route,Navigate} from "react-router-dom";
 import Location from './components/Location';
 import NavBar from './components/NavBar';
 import Login from './components/Login'
 import Profile from './components/Profile';
 import React, { useState, useEffect, useMemo }  from 'react';
-import Admin from './components/Admin';
-// import Wea from './components/testWea';
-import London from './backgroundImage/London.png' 
+import Admin from './components/Admin'; 
 import { AuthContext } from './context/AuthContext';
 import Markmap from './components/Markmap';
 import NotFoundPage from './components/NotFoundPage';
-//ref
+
+
+// Code adapted from kirlich on stackoverflow:
+// https://stackoverflow.com/questions/10730362/get-cookie-by-name
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
@@ -44,7 +45,7 @@ function App() {
    
             <Route path="/admin" element={<Admin />} />
           
-          <Route path="error" element={<NotFound/>}/> 
+          <Route path="error" element={<NotFoundPage />}/> 
           </>
         }
 
@@ -53,31 +54,6 @@ function App() {
     </AuthContext.Provider>
     
   );
-}
-function Home(){
-  return(
-    <div style={{
-      height: "100vh",
-      width: "100%",
-      backgroundImage: `linear-gradient(rgba(182, 187, 205, 0.7), rgba(4,9,30,0.7)), url(${London})`,  
-      backgroundPosition: "center",
-      backgroundSize: "cover",
-      backgroundAttachment: "fixed"
-  }}> homepage, http://localhost:3000/location/"country code here" </div>
-  )
-}
-
-function NotFound(){
-  return(
-    <div style={{
-      height: "100vh",
-      width: "100%",
-      backgroundImage: `linear-gradient(rgba(182, 187, 205, 0.7), rgba(4,9,30,0.7)), url(${London})`,  
-      backgroundPosition: "center",
-      backgroundSize: "cover",
-      backgroundAttachment: "fixed"
-  }}> 404 </div>
-  )
 }
 
 export default App;

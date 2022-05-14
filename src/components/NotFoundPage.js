@@ -1,5 +1,4 @@
 import React from 'react';
-import London from '../backgroundImage/London.png'
 import { Container, Button } from '@mui/material';
 import './NotFoundPage.css';
 import { Link } from 'react-router-dom';
@@ -31,19 +30,19 @@ const errorh2 = {
 function NotFoundPage() {
     return(
         <div style={{
-            height: "100vh",
-            width: "100%",
-            backgroundImage: `linear-gradient(rgba(182, 187, 205, 0.7), rgba(4,9,30,0.7)), url(${London})`,  
-            backgroundPosition: "center",
+            height:"100vh",
+            width:"100%",
+            backgroundColor:"#75CFF0",
             backgroundSize: "cover",
-            position: "fixed",
+            backgroundAttachment: "fixed",
+            paddingTop:"22vh"
         }}>
             <Container maxWidth="sm" 
                     sx={{
                         backgroundColor:"white",textAlign:"center",
                         shadow: "0 2px 0 rgba(0, 0, 0, 0.05), 0 5px 20px rgba(0, 0, 0, 0.1)"
                     }} 
-                        className="border border-light border-4 balance"
+                        className="border border-light border-4"
             >
                 <div id="error-box" style={errorboxstyle}>
                     <div class="error-message" >
