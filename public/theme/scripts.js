@@ -7,6 +7,10 @@
 // Scripts
 // 
 
+
+
+// Code adapted from startBootstrap:
+// https://startbootstrap.com/theme/creative
 window.addEventListener('DOMContentLoaded', event => {
 
     // Navbar shrink function
