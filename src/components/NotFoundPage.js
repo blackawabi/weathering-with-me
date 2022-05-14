@@ -1,3 +1,8 @@
+/**
+ * The style of font is inspired from 
+ * https://codepen.io/ziteboard/pen/vVyZBa
+ */
+
 import React from 'react';
 import { Container, Button } from '@mui/material';
 import './NotFoundPage.css';
