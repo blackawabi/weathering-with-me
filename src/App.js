@@ -2,7 +2,7 @@ import { Routes, Route, useNavigate,Navigate,useParams} from "react-router-dom";
 import Location from './components/Location';
 import NavBar from './components/NavBar';
 import Login from './components/Login'
-import StickyHeadTable from './components/Profile';
+import Profile from './components/Profile';
 import React, { useState, useEffect, useMemo }  from 'react';
 import Admin from './components/Admin';
 // import Wea from './components/testWea';
@@ -40,7 +40,7 @@ function App() {
           <>
           <Route path="/" element={<Markmap />}/>
           <Route path="/location/:code" element={<Location />}/>   
-          <Route path="/profile" element={<StickyHeadTable />} />
+          <Route path="/profile" element={<Profile />} />
    
             <Route path="/admin" element={<Admin />} />
           

@@ -75,20 +75,27 @@ router.get('/account', (req, res) => {
 
 // update account
 router.put('/account', (req, res) => {
-    User.findOneAndUpdate({
-        username: req.body['original_username']
-    }, {
-        username: req.body['new_username'],
-        password: req.body['new_password']
-    }, (err, result) => {
-        if(err){
-            res.status(401);
-            res.send('New username already exists/ username not found');
-        }else{
-            res.status(200);
-            res.send('Updated successfully');
-        }
-    });
+    if(req.body['new_username'].length >= 4 && req.body['new_username'].length <= 20 && req.body['new_password'].length >= 4 && req.body['new_password'].length <= 20){
+        const hashedPassword=p4ssw0rd.hash(req.body['new_password'],{cost:10})
+        User.findOneAndUpdate({
+            username: req.body['original_username']
+        }, {
+            username: req.body['new_username'],
+            password: hashedPassword
+        }, (err, result) => {
+            if(err){
+                res.status(401);
+                res.send('New username already exists/ username not found');
+            }else{
+                res.status(200);
+                res.send('Updated successfully');
+            }
+        });
+    }else{
+        res.status(401);
+        res.send('Invalid new_username/new_password');
+    }
+    
 });
 
 
