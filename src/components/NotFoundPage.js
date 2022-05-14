@@ -4,6 +4,30 @@ import { Container, Button } from '@mui/material';
 import './NotFoundPage.css';
 import { Link } from 'react-router-dom';
 
+const errorboxstyle ={
+    display: "table",
+    width: "100%",
+    height: "30vh",
+    textAlign: "center",
+}
+
+const errorh1 = {
+    fontSize: "50px",
+    display: "inline-block",
+    paddingRIght: "12px",
+    animation: "type .5s alternate infinite",
+}
+
+
+const errorh2 = {
+    fontSize: "30px",
+    display: "inline-block",
+    paddingRIght: "12px",
+    animation: "type .5s alternate infinite",
+}
+
+
+
 function NotFoundPage() {
     return(
         <div style={{
@@ -21,10 +45,10 @@ function NotFoundPage() {
                     }} 
                         className="border border-light border-4 balance"
             >
-                <div id="main">
-                    <div class="fof">
-                            <h1>Error 404</h1>
-                            <h2>THAT PAGE DOES NOT EXIST</h2>
+                <div id="error-box" style={errorboxstyle}>
+                    <div class="error-message" >
+                            <h1 style={errorh1}>Error 404</h1>
+                            <h2 style={errorh2}>THAT PAGE DOES NOT EXIST</h2>
                     </div>
                 </div>
 
