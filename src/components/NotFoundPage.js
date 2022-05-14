@@ -1,5 +1,5 @@
 /**
- * The style of font is inspired from 
+ * The style of font is adapt from 
  * https://codepen.io/ziteboard/pen/vVyZBa
  */
 
